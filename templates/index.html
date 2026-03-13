@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriMood AI - Mood-Based Nutrition</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>🍎 NutriMood AI</h1>
+            <p class="tagline">Discover how your mood can guide your nutrition for better mental well-being</p>
+            <p class="tagline tamil">உங்கள் மனநிலையைப் புரிந்து உணவுப்பயன்பாட்டை மேம்படுத்துங்கள்</p>
+            <p class="description">
+                Our AI-powered system analyzes your facial expressions and voice to detect your current mood,
+                then recommends personalized foods that can help improve your mental health.
+            </p>
+            <p class="description tamil">
+                உங்கள் முகவாய்மை மற்றும் குரலைப் பிரதிபலித்து, உங்கள் மனநிலையை கண்டறிந்து உணவுக் பரிந்துரைகள் வழங்குகிறது.
+            </p>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📹</div>
+                <h3>Face Detection</h3>
+                <p>Advanced facial emotion recognition using computer vision and deep learning</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎤</div>
+                <h3>Voice Analysis</h3>
+                <p>Sentiment analysis from your speech patterns and keywords</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🥗</div>
+                <h3>Food Recommendations</h3>
+                <p>Personalized nutrition suggestions based on your detected mood</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📷</div>
+                <h3>Food Scanner</h3>
+                <p>Scan food items to get detailed nutrition information</p>
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Grant Permissions</h4>
+                    <p>Allow camera and microphone access for emotion detection</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Express Yourself</h4>
+                    <p>Speak naturally while the camera captures your facial expressions</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Get Recommendations</h4>
+                    <p>Receive personalized food suggestions for your mood</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <button onclick="window.location.href='/detect'" class="btn primary large">
+                🚀 Start Mood Detection
+            </button>
+            <button onclick="window.location.href='/foodscan'" class="btn secondary large">
+                📷 Try Food Scanner
+            </button>
+        </div>
+
+        <footer>
+            <p>Built with ❤️ using Python, Flask, TensorFlow, and DeepFace</p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection - NutriMood AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NutriMood AI</h1>
+            <p>Detecting your mood through facial expressions and voice...</p>
+            <p class="tamil">உங்கள் முகஅறிவு மற்றும் குரலால் உங்கள் மனநிலையை கண்டறிகிறது...</p>
+        </header>
+
+        <div class="detection-container">
+            <div class="camera-section">
+                <h2>📹 Face Detection</h2>
+                <div class="camera-wrapper">
+                    <video id="camera" autoplay muted></video>
+                    <div id="faceStatus" class="status">Initializing camera...</div>
+                </div>
+            </div>
+
+            <div class="voice-section">
+                <h2>🎤 Voice Detection</h2>
+                <div class="voice-wrapper">
+                    <div id="voiceStatus" class="status">Initializing voice recognition...</div>
+                    <div id="voiceText" class="voice-text"></div>
+                    <button id="startVoiceBtn" class="btn">Start Voice Detection</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h3>Analysis Progress</h3>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div id="progressText">Preparing analysis...</div>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <h3>Analysis Complete!</h3>
+            <div class="emotion-display">
+                <div id="faceEmotion">Face: Analyzing...</div>
+                <div id="voiceEmotion">Voice: Analyzing...</div>
+                <div id="finalEmotion">Final Mood: Analyzing...</div>
+            </div>
+            <button id="continueBtn" class="btn primary">View Recommendations</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

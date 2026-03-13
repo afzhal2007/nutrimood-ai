@@ -1,0 +1,9 @@
+flask
+opencv-python
+tensorflow
+speechrecognition
+librosa
+scipy
+numpy
+pillow
+requests

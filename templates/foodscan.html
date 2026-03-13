@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Scanner - NutriMood AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍎 NutriMood AI</h1>
+            <p>Food Scanner - Discover Nutrition Facts</p>
+            <p class="tamil">உணவு ஸ்கேனர் - ஊட்டச்சத்து தகவல்களை கண்டுபிடிக்கவும்</p>
+        </header>
+
+        <div class="scanner-container">
+            <div class="upload-section">
+                <h2>📷 Upload Food Image</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📸</div>
+                        <p>Click to upload or drag and drop</p>
+                        <p class="upload-hint">Supported formats: JPG, PNG, JPEG</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+                <button id="scanBtn" class="btn primary" style="display: none;">🔍 Scan Food</button>
+            </div>
+
+            <div id="previewSection" class="preview-section" style="display: none;">
+                <h3>Image Preview</h3>
+                <img id="imagePreview" alt="Food preview">
+            </div>
+
+            <div id="resultsSection" class="nutrition-results" style="display: none;">
+                <h3>🍽️ Nutrition Information</h3>
+                <div class="food-info">
+                    <h4 id="foodName">Loading...</h4>
+                    <div class="nutrition-grid">
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Calories</span>
+                            <span id="calories" class="nutrition-value">0 kcal</span>
+                        </div>
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Protein</span>
+                            <span id="protein" class="nutrition-value">0 g</span>
+                        </div>
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Carbohydrates</span>
+                            <span id="carbs" class="nutrition-value">0 g</span>
+                        </div>
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Fat</span>
+                            <span id="fat" class="nutrition-value">0 g</span>
+                        </div>
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Fiber</span>
+                            <span id="fiber" class="nutrition-value">0 g</span>
+                        </div>
+                        <div class="nutrition-item">
+                            <span class="nutrition-label">Sugar</span>
+                            <span id="sugar" class="nutrition-value">0 g</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loadingSection" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Analyzing your food...</p>
+            </div>
+
+            <div id="errorSection" class="error" style="display: none;">
+                <p id="errorMessage">An error occurred while scanning the food.</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button onclick="window.location.href='/detect'" class="btn secondary">🔄 Back to Detection</button>
+            <button onclick="window.location.href='/'" class="btn">🏠 Home</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

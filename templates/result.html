@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Mood Results - NutriMood AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍎 NutriMood AI</h1>
+            <p>Your Personalized Mood-Based Nutrition Guide</p>
+        </header>
+
+        <div class="result-card">
+            <div class="mood-display">
+                <h2 id="emotion">Loading...</h2>
+                <p class="tamil" id="emotionTamil">பொதுவாகக் காத்திருக்கிறேன்...</p>
+                <div class="confidence-meter">
+                    <div class="confidence-label">Confidence: (நம்பகத்தன்மை)</div>
+                    <div class="confidence-bar">
+                        <div id="confidenceFill" class="confidence-fill"></div>
+                    </div>
+                    <div id="confidencePercent" class="confidence-percent">0%</div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3>🥗 Recommended Foods</h3>
+                <div id="foods" class="food-cards">
+                    <!-- Food cards will be populated by JavaScript -->
+                </div>
+
+                <div class="how-to-eat">
+                    <h4>📋 How to Eat</h4>
+                    <p id="how">Loading...</p>
+                </div>
+
+                <div class="benefits">
+                    <h4>💡 Mental Health Benefits</h4>
+                    <p id="benefits">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button onclick="window.location.href='/detect'" class="btn secondary">🔄 Try Again / மீண்டும் முயற்சிக்கவும்</button>
+            <button onclick="window.location.href='/foodscan'" class="btn primary">📷 Scan Food / உணவை ஸ்கேன் செய்</button>
+            <button onclick="window.location.href='/'" class="btn">🏠 Home / முகப்பு</button>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
