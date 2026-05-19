@@ -33,10 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (settingsLogoutBtn) {
-    settingsLogoutBtn.addEventListener("click", (e) => {
+    settingsLogoutBtn.addEventListener("click", function (e) {
       e.preventDefault();
+
       localStorage.removeItem("nutrimoodUser");
       localStorage.removeItem("nutrimoodToken");
+
       window.location.href = "index.html";
     });
   }

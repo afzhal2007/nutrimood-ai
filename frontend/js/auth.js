@@ -1,4 +1,3 @@
-// Auth page scripts
 // ================= NUTRIMOOD AI - AUTH JS =================
 
 const AUTH_API = "https://nutrimood-ai.vercel.app/api/auth";
@@ -25,14 +24,39 @@ function getCurrentPage() {
 function getUser() {
   try {
     return JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
 
+function saveUser(user) {
+  localStorage.setItem("nutrimoodUser", JSON.stringify(user));
+}
+
+function showMessage(elementId, message, type = "success") {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  el.textContent = message;
+  el.style.color = type === "success" ? "#22c55e" : "#ef4444";
+}
+
+function addHistory(item) {
+  const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
+  history.unshift({ ...item, date: new Date().toLocaleString() });
+  localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+}
+
+function applyTheme() {
+  const savedTheme = localStorage.getItem("nutrimoodTheme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+}
+
 function logoutUser() {
+  console.log("Logout clicked");
+
   localStorage.removeItem("nutrimoodUser");
   localStorage.removeItem("nutrimoodToken");
+  localStorage.removeItem("nutrimoodStarted");
 
   document.body.classList.remove("sidebar-open");
 
@@ -42,69 +66,31 @@ function logoutUser() {
   if (sidebar) sidebar.classList.remove("active");
   if (overlay) overlay.classList.remove("active");
 
-  window.location.href = "index.html";
+  window.location.replace("index.html");
 }
 
-function saveUser(user) {
-  localStorage.setItem("nutrimoodUser", JSON.stringify(user));
-}
+window.logoutUser = logoutUser;
 
-function updateUserInUsers(updatedUser) {
-  const users = JSON.parse(localStorage.getItem("nutrimoodUsers")) || [];
-  const updatedUsers = users.map((user) => {
-    if (user.email === updatedUser.email) {
-      return {
-        ...user,
-        ...updatedUser
-      };
-    }
-    return user;
-  });
+function ensureLogoutButton() {
+  const sidebar = document.getElementById("sidebar");
+  if (!sidebar) return;
 
-  const exists = updatedUsers.some((user) => user.email === updatedUser.email);
+  if (document.getElementById("logoutBtn")) return;
 
-  if (!exists) {
-    updatedUsers.push(updatedUser);
+  let target = sidebar.querySelector(".sidebar-bottom");
+  if (!target) {
+    target = document.createElement("div");
+    target.className = "sidebar-bottom";
+    sidebar.appendChild(target);
   }
 
-  localStorage.setItem("nutrimoodUsers", JSON.stringify(updatedUsers));
-  localStorage.setItem("nutrimoodUser", JSON.stringify(updatedUser));
-}
-
-function addHistory(item) {
-  const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
-  history.unshift({
-    ...item,
-    date: new Date().toLocaleString()
-  });
-  localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
-}
-
-function showMessage(elementId, message, type = "success") {
-  const el = document.getElementById(elementId);
-  if (!el) return;
-
-  el.textContent = message;
-  el.style.color = type === "success" ? "#22c55e" : "#ef4444";
-}
-
-function applyTheme() {
-  const savedTheme = localStorage.getItem("nutrimoodTheme") || "dark";
-  document.documentElement.setAttribute("data-theme", savedTheme);
-}
-
-function setupThemeToggle() {
-  const toggles = document.querySelectorAll("#themeToggle, #settingsThemeBtn");
-
-  toggles.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const currentTheme = document.documentElement.getAttribute("data-theme");
-      const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("nutrimoodTheme", newTheme);
-    });
-  });
+  const button = document.createElement("button");
+  button.type = "button";
+  button.id = "logoutBtn";
+  button.className = "logout-btn";
+  button.setAttribute("data-action", "logout");
+  button.innerHTML = "<span>🚪</span> Logout";
+  target.appendChild(button);
 }
 
 function checkProtectedPage() {
@@ -117,7 +103,7 @@ function checkProtectedPage() {
   if (!user || !user.loggedIn || !token) {
     localStorage.removeItem("nutrimoodUser");
     localStorage.removeItem("nutrimoodToken");
-    window.location.href = "login.html";
+    window.location.replace("login.html");
   }
 }
 
@@ -127,8 +113,20 @@ function redirectLoggedInUser() {
   const token = localStorage.getItem("nutrimoodToken");
 
   if (currentPage === "login.html" && user && user.loggedIn && token) {
-    window.location.href = "dashboard.html";
+    window.location.replace("dashboard.html");
   }
+}
+
+function setupThemeToggle() {
+  const toggles = document.querySelectorAll("#themeToggle, #settingsThemeBtn");
+  toggles.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("nutrimoodTheme", newTheme);
+    });
+  });
 }
 
 function setupLoginSignup() {
@@ -147,8 +145,8 @@ function setupLoginSignup() {
     signupTab.classList.remove("active");
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
-    formTitle.textContent = "Login";
-    formSubtitle.textContent = "Enter your details to continue.";
+    if (formTitle) formTitle.textContent = "Login";
+    if (formSubtitle) formSubtitle.textContent = "Enter your details to continue.";
   });
 
   signupTab.addEventListener("click", () => {
@@ -156,15 +154,15 @@ function setupLoginSignup() {
     loginTab.classList.remove("active");
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
-    formTitle.textContent = "Create Account";
-    formSubtitle.textContent = "Signup to start your mood nutrition journey.";
+    if (formTitle) formTitle.textContent = "Create Account";
+    if (formSubtitle) formSubtitle.textContent = "Signup to start your mood nutrition journey.";
   });
 
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
+    const email = document.getElementById("loginEmail")?.value.trim();
+    const password = document.getElementById("loginPassword")?.value.trim();
 
     if (!email || !password) {
       showMessage("authMessage", "Please enter email and password.", "error");
@@ -176,16 +174,12 @@ function setupLoginSignup() {
 
       const response = await fetch(`${AUTH_API}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email,
-          password
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
       });
 
       const data = await response.json();
+      console.log("Login response:", data);
 
       if (!response.ok || !data.ok) {
         showMessage("authMessage", data.error || "Login failed.", "error");
@@ -193,16 +187,10 @@ function setupLoginSignup() {
       }
 
       localStorage.setItem("nutrimoodToken", data.token);
-      localStorage.setItem("nutrimoodUser", JSON.stringify({
-        ...data.user,
-        loggedIn: true
-      }));
-
+      saveUser({ ...data.user, loggedIn: true });
       showMessage("authMessage", "Login successful!", "success");
 
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 600);
+      setTimeout(() => window.location.replace("dashboard.html"), 500);
     } catch (error) {
       console.error("Login error:", error);
       showMessage("authMessage", "Backend connection failed. Please try again.", "error");
@@ -212,10 +200,10 @@ function setupLoginSignup() {
   signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("signupName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value.trim();
-    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const name = document.getElementById("signupName")?.value.trim();
+    const email = document.getElementById("signupEmail")?.value.trim();
+    const password = document.getElementById("signupPassword")?.value.trim();
+    const confirmPassword = document.getElementById("confirmPassword")?.value.trim();
 
     if (!name || !email || !password || !confirmPassword) {
       showMessage("authMessage", "Please fill all fields.", "error");
@@ -237,17 +225,12 @@ function setupLoginSignup() {
 
       const response = await fetch(`${AUTH_API}/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
       });
 
       const data = await response.json();
+      console.log("Signup response:", data);
 
       if (!response.ok || !data.ok) {
         showMessage("authMessage", data.error || "Signup failed.", "error");
@@ -255,16 +238,10 @@ function setupLoginSignup() {
       }
 
       localStorage.setItem("nutrimoodToken", data.token);
-      localStorage.setItem("nutrimoodUser", JSON.stringify({
-        ...data.user,
-        loggedIn: true
-      }));
-
+      saveUser({ ...data.user, loggedIn: true });
       showMessage("authMessage", "Account created successfully!", "success");
 
-      setTimeout(() => {
-        window.location.href = "basic-details.html";
-      }, 600);
+      setTimeout(() => window.location.replace("basic-details.html"), 500);
     } catch (error) {
       console.error("Signup error:", error);
       showMessage("authMessage", "Backend connection failed. Please try again.", "error");
@@ -273,8 +250,8 @@ function setupLoginSignup() {
 
   if (demoLoginBtn) {
     demoLoginBtn.addEventListener("click", () => {
-      // Demo login: local-only demo user (does not persist to backend)
       const demoUser = {
+        id: "demo-user",
         name: "Afzhal",
         email: "demo@nutrimood.ai",
         loggedIn: true,
@@ -282,52 +259,146 @@ function setupLoginSignup() {
         instructionsCompleted: false
       };
 
-      localStorage.setItem("nutrimoodUser", JSON.stringify(demoUser));
-
-      addHistory({
-        type: "account",
-        title: "Demo Login",
-        details: "User logged in using demo account."
-      });
-
-      if (!demoUser.profileCompleted) {
-        window.location.href = "basic-details.html";
-      } else if (!demoUser.instructionsCompleted) {
-        window.location.href = "instructions.html";
-      } else {
-        window.location.href = "dashboard.html";
-      }
+      localStorage.setItem("nutrimoodToken", "demo-token");
+      saveUser(demoUser);
+      addHistory({ type: "account", title: "Demo Login", details: "User logged in using demo account." });
+      window.location.replace("basic-details.html");
     });
   }
 }
 
+function setupBasicDetails() {
+  const form = document.getElementById("basicDetailsForm");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const user = getUser();
+    const token = localStorage.getItem("nutrimoodToken");
+
+    if (!user || !token) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    const userId = user.id || user._id;
+    const getValue = (id) => document.getElementById(id)?.value?.trim() || "";
+
+    const profileData = {
+      name: getValue("fullName") || getValue("name") || user.name,
+      age: getValue("age"),
+      gender: getValue("gender"),
+      height: getValue("height"),
+      weight: getValue("weight"),
+      foodPreference: getValue("foodPreference"),
+      healthGoal: getValue("healthGoal"),
+      activityLevel: getValue("activityLevel"),
+      commonMood: getValue("commonMood"),
+      allergies: getValue("allergies") || "None"
+    };
+
+    if (!userId || userId === "demo-user") {
+      saveUser({ ...user, ...profileData, profileCompleted: true, loggedIn: true });
+      window.location.replace("instructions.html");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${AUTH_API}/profile/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileData)
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        alert(data.error || "Profile update failed.");
+        return;
+      }
+
+      saveUser({ ...data.user, loggedIn: true });
+      window.location.replace("instructions.html");
+    } catch (error) {
+      console.error("Profile update error:", error);
+      alert("Backend connection failed. Please try again.");
+    }
+  });
+}
+
+function setupInstructions() {
+  const form = document.getElementById("instructionsForm");
+  const btn = document.getElementById("acceptInstructionsBtn");
+
+  const handler = async (e) => {
+    e.preventDefault();
+
+    const user = getUser();
+    const token = localStorage.getItem("nutrimoodToken");
+
+    if (!user || !token) {
+      window.location.replace("login.html");
+      return;
+    }
+
+    const userId = user.id || user._id;
+
+    if (!userId || userId === "demo-user") {
+      saveUser({ ...user, instructionsCompleted: true, loggedIn: true });
+      window.location.replace("dashboard.html");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${AUTH_API}/instructions/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" }
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        alert(data.error || "Instructions update failed.");
+        return;
+      }
+
+      saveUser({ ...user, ...data.user, loggedIn: true });
+      window.location.replace("dashboard.html");
+    } catch (error) {
+      console.error("Instructions update error:", error);
+      alert("Backend connection failed. Please try again.");
+    }
+  };
+
+  if (form) form.addEventListener("submit", handler);
+  if (btn) btn.addEventListener("click", handler);
+}
+
 function setupPasswordToggle() {
   const buttons = document.querySelectorAll(".password-toggle");
-
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const targetId = btn.getAttribute("data-target");
       const input = document.getElementById(targetId);
-
       if (!input) return;
-
       input.type = input.type === "password" ? "text" : "password";
     });
   });
 }
 
 function setupLogout() {
-  const logoutButtons = document.querySelectorAll(
-    "#logoutBtn, #settingsLogoutBtn, .logout-btn, [data-action='logout']"
-  );
+  document.addEventListener(
+    "click",
+    function (e) {
+      const logoutBtn = e.target.closest("#logoutBtn, .logout-btn, [data-action='logout']");
+      if (!logoutBtn) return;
 
-  logoutButtons.forEach((btn) => {
-    btn.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation();
       logoutUser();
-    });
-  });
+    },
+    true
+  );
 }
 
 function setupSidebar() {
@@ -352,35 +423,23 @@ function setupSidebar() {
   menuBtn.addEventListener("click", function (e) {
     e.preventDefault();
     e.stopPropagation();
-
-    if (sidebar.classList.contains("active")) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
+    sidebar.classList.contains("active") ? closeSidebar() : openSidebar();
   });
 
-  overlay.addEventListener("click", function () {
-    closeSidebar();
-  });
+  overlay.addEventListener("click", closeSidebar);
 
-  sidebar.querySelectorAll("a:not(#logoutBtn):not(.logout-btn)").forEach((link) => {
-    link.addEventListener("click", function () {
-      closeSidebar();
-    });
+  sidebar.querySelectorAll(".side-link").forEach((link) => {
+    link.addEventListener("click", closeSidebar);
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      closeSidebar();
-    }
+    if (e.key === "Escape") closeSidebar();
   });
 }
 
 function loadProfileInitial() {
   const user = getUser();
   const initialEls = document.querySelectorAll("#profileInitial");
-
   if (!user) return;
 
   initialEls.forEach((el) => {
@@ -388,32 +447,28 @@ function loadProfileInitial() {
   });
 }
 
+function setupFloatingLuckyBot() {
+  const bot = document.getElementById("floatingLuckyBot");
+  if (!bot) return;
+
+  bot.addEventListener("click", function () {
+    const user = getUser();
+    window.location.href = user && user.loggedIn ? "lucky-ai.html" : "login.html";
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   applyTheme();
   checkProtectedPage();
   redirectLoggedInUser();
+  ensureLogoutButton();
   setupThemeToggle();
   setupLoginSignup();
+  setupBasicDetails();
+  setupInstructions();
   setupPasswordToggle();
   setupLogout();
   setupSidebar();
   loadProfileInitial();
   setupFloatingLuckyBot();
 });
-
-
-// Floating Lucky Bot handler (for pages that load auth.js)
-function setupFloatingLuckyBot() {
-  const bot = document.getElementById("floatingLuckyBot");
-  if (!bot) return;
-
-  bot.addEventListener("click", function () {
-    const user = JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
-
-    if (user && user.loggedIn) {
-      window.location.href = "lucky-ai.html";
-    } else {
-      window.location.href = "login.html";
-    }
-  });
-}
