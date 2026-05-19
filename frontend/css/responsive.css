@@ -1442,3 +1442,104 @@ main {
     min-width: 48px !important;
   }
 }
+
+/* FINAL SIDEBAR + LOGOUT MOBILE FIX */
+
+@media (max-width: 900px) {
+  body.sidebar-open {
+    overflow: hidden !important;
+  }
+
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -86vw !important;
+    width: 76vw !important;
+    max-width: 300px !important;
+    min-width: 260px !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 22px 18px !important;
+    border-radius: 0 28px 28px 0 !important;
+    z-index: 3000 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: left 0.28s ease !important;
+    background: #060b18 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 18px 0 60px rgba(0, 0, 0, 0.65) !important;
+    overflow-y: auto !important;
+  }
+
+  .sidebar.active {
+    left: 0 !important;
+  }
+
+  .sidebar-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    z-index: 2500 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.25s ease !important;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 28px !important;
+  }
+
+  .side-link {
+    opacity: 1 !important;
+    color: rgba(255, 255, 255, 0.82) !important;
+    padding: 13px 14px !important;
+    font-size: 0.95rem !important;
+    border-radius: 16px !important;
+  }
+
+  .side-link.active {
+    color: #ffffff !important;
+  }
+
+  .sidebar-bottom {
+    margin-top: 24px !important;
+  }
+
+  .logout-btn,
+  #logoutBtn {
+    width: 100% !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 4000 !important;
+  }
+
+  .dashboard-main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 12px !important;
+  }
+
+  .dashboard-topbar {
+    margin-top: 6px !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .sidebar {
+    width: 78vw !important;
+    max-width: 285px !important;
+    min-width: 250px !important;
+    left: -90vw !important;
+  }
+
+  .sidebar.active {
+    left: 0 !important;
+  }
+}

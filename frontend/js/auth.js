@@ -33,8 +33,15 @@ function getUser() {
 function logoutUser() {
   localStorage.removeItem("nutrimoodUser");
   localStorage.removeItem("nutrimoodToken");
-  // preserve history/mood data unless user explicitly clears it
+
   document.body.classList.remove("sidebar-open");
+
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("sidebarOverlay");
+
+  if (sidebar) sidebar.classList.remove("active");
+  if (overlay) overlay.classList.remove("active");
+
   window.location.href = "index.html";
 }
 
@@ -317,6 +324,7 @@ function setupLogout() {
   logoutButtons.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.preventDefault();
+      e.stopPropagation();
       logoutUser();
     });
   });
@@ -352,14 +360,20 @@ function setupSidebar() {
     }
   });
 
-  overlay.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", function () {
+    closeSidebar();
+  });
 
-  sidebar.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeSidebar);
+  sidebar.querySelectorAll("a:not(#logoutBtn):not(.logout-btn)").forEach((link) => {
+    link.addEventListener("click", function () {
+      closeSidebar();
+    });
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeSidebar();
+    if (e.key === "Escape") {
+      closeSidebar();
+    }
   });
 }
 
