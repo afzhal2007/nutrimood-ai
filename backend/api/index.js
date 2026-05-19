@@ -26,7 +26,9 @@ app.options("*", cors());
 app.use(express.json());
 
 // Connect to MongoDB
-connectDB();
+connectDB().catch((error) => {
+  console.error("Initial MongoDB connection failed:", error.message);
+});
 
 app.get("/", (req, res) => {
   res.json({
@@ -316,25 +318,40 @@ app.get("/api/test", (req, res) => {
 app.get("/api/db-test", async (req, res) => {
   try {
     const mongoose = require("mongoose");
+    await connectDB();
 
     res.json({
       ok: true,
       mongoUriExists: !!process.env.MONGO_URI,
       mongoState: mongoose.connection.readyState,
-      message: "DB test route working"
+      message: "DB connected test working"
     });
   } catch (error) {
     res.status(500).json({
       ok: false,
+      mongoUriExists: !!process.env.MONGO_URI,
       error: error.message
     });
   }
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/moods", moodRoutes);
-app.use("/api/chats", chatRoutes);
-app.use("/api/recommendations", recommendationRoutes);
-app.use("/api/scans", scanRoutes);
+async function ensureDB(req, res, next) {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("Database middleware error:", error.message);
+    res.status(500).json({
+      ok: false,
+      error: "Database connection failed"
+    });
+  }
+}
+
+app.use("/api/auth", ensureDB, authRoutes);
+app.use("/api/moods", ensureDB, moodRoutes);
+app.use("/api/chats", ensureDB, chatRoutes);
+app.use("/api/recommendations", ensureDB, recommendationRoutes);
+app.use("/api/scans", ensureDB, scanRoutes);
 
 module.exports = app;
