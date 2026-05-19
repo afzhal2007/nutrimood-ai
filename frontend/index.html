@@ -41,13 +41,13 @@
     </a>
 
     <nav class="nav-links" id="navLinks">
-      <a href="#home" class="active">Home</a>
-      <a href="#features">Features</a>
-      <a href="#mood">Mood Check</a>
-      <a href="#recommendations">Recommendations</a>
-      <a href="#lucky-ai">Lucky AI</a>
-      <a href="#how">How It Works</a>
-    </nav>
+  <a href="index.html" class="active">Home</a>
+  <a href="index.html#features">Features</a>
+  <a href="mood-check.html">Mood Check</a>
+  <a href="recommendations.html">Recommendations</a>
+  <a href="lucky-ai.html">Lucky AI</a>
+  <a href="index.html#how">How It Works</a>
+</nav>
 
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -470,5 +470,33 @@
   <!-- JS -->
   <script src="js/script.js"></script>
   <script src="js/hotfix.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    if (!menuBtn || !navLinks) {
+      console.log("menuBtn or navLinks missing");
+      return;
+    }
+
+    menuBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      menuBtn.classList.toggle("active");
+      navLinks.classList.toggle("active");
+      document.body.classList.toggle("menu-open");
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("active");
+        menuBtn.classList.remove("active");
+        document.body.classList.remove("menu-open");
+      });
+    });
+  });
+</script>
 </body>
 </html>
