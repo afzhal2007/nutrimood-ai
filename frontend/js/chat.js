@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api/chat";
+const API_URL = "https://nutrimood-ai.vercel.app/api/chat";
 
 document.addEventListener("DOMContentLoaded", () => {
   const chatForm = document.getElementById("chatForm");

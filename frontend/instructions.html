@@ -17,6 +17,7 @@
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 
 <body>
@@ -239,6 +240,11 @@
 
       (async () => {
         try {
+          if (!userId) {
+            alert("User ID missing. Please login again.");
+            return;
+          }
+
           if (userId && token) {
             const res = await fetch(`${AUTH_API}/instructions/${userId}`, {
               method: "PUT",

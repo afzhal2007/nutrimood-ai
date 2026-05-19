@@ -27,14 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
     menuBtn.addEventListener("click", function () {
       navLinks.classList.toggle("active");
       menuBtn.classList.toggle("active");
+      document.body.classList.toggle("menu-open", navLinks.classList.contains("active"));
     });
 
-    const navItems = navLinks.querySelectorAll("a");
-
-    navItems.forEach(function (link) {
+    navLinks.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
         navLinks.classList.remove("active");
         menuBtn.classList.remove("active");
+        document.body.classList.remove("menu-open");
       });
     });
   }
@@ -357,6 +357,27 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+
+
+// ================= FLOATING LUCKY BOT HANDLER =================
+function setupFloatingLuckyBot() {
+  const bot = document.getElementById("floatingLuckyBot");
+
+  if (!bot) return;
+
+  bot.addEventListener("click", function () {
+    const user = JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+
+    if (user && user.loggedIn) {
+      window.location.href = "lucky-ai.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+}
+
+setupFloatingLuckyBot();
 
 
 

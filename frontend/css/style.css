@@ -870,7 +870,7 @@ html[data-theme="light"] .toggle-ball {
 
 
 .premium-brain-card {
-  width: min(430px, 100%);
+  width: min(360px, 100%);
   aspect-ratio: 1 / 1;
   border-radius: 42px;
   position: relative;
@@ -906,8 +906,8 @@ html[data-theme="light"] .toggle-ball {
 }
 
 .premium-brain-img {
-  width: 210px;
-  height: 210px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border-radius: 38px;
   position: relative;

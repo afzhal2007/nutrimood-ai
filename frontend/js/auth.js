@@ -1,7 +1,7 @@
 // Auth page scripts
 // ================= NUTRIMOOD AI - AUTH JS =================
 
-const AUTH_API = "http://localhost:5000/api/auth";
+const AUTH_API = "https://nutrimood-ai.vercel.app/api/auth";
 
 const protectedPages = [
   "dashboard.html",
@@ -17,10 +17,25 @@ const protectedPages = [
   "instructions.html"
 ];
 
-const currentPage = window.location.pathname.split("/").pop() || "index.html";
+function getCurrentPage() {
+  const page = window.location.pathname.split("/").pop();
+  return page || "index.html";
+}
 
 function getUser() {
-  return JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+  try {
+    return JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function logoutUser() {
+  localStorage.removeItem("nutrimoodUser");
+  localStorage.removeItem("nutrimoodToken");
+  // preserve history/mood data unless user explicitly clears it
+  document.body.classList.remove("sidebar-open");
+  window.location.href = "index.html";
 }
 
 function saveUser(user) {
@@ -86,19 +101,25 @@ function setupThemeToggle() {
 }
 
 function checkProtectedPage() {
+  const currentPage = getCurrentPage();
   if (!protectedPages.includes(currentPage)) return;
 
   const user = getUser();
+  const token = localStorage.getItem("nutrimoodToken");
 
-  if (!user || !user.loggedIn) {
+  if (!user || !user.loggedIn || !token) {
+    localStorage.removeItem("nutrimoodUser");
+    localStorage.removeItem("nutrimoodToken");
     window.location.href = "login.html";
   }
 }
 
 function redirectLoggedInUser() {
+  const currentPage = getCurrentPage();
   const user = getUser();
+  const token = localStorage.getItem("nutrimoodToken");
 
-  if (currentPage === "login.html" && user && user.loggedIn) {
+  if (currentPage === "login.html" && user && user.loggedIn && token) {
     window.location.href = "dashboard.html";
   }
 }
@@ -132,117 +153,115 @@ function setupLoginSignup() {
     formSubtitle.textContent = "Signup to start your mood nutrition journey.";
   });
 
-  loginForm.addEventListener("submit", (e) => {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    (async () => {
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value.trim();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
 
-      if (!email || !password) {
-        showMessage("authMessage", "Please enter email and password.", "error");
+    if (!email || !password) {
+      showMessage("authMessage", "Please enter email and password.", "error");
+      return;
+    }
+
+    try {
+      showMessage("authMessage", "Logging in...", "success");
+
+      const response = await fetch(`${AUTH_API}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        showMessage("authMessage", data.error || "Login failed.", "error");
         return;
       }
 
-      try {
-        const res = await fetch(`${AUTH_API}/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
-        });
+      localStorage.setItem("nutrimoodToken", data.token);
+      localStorage.setItem("nutrimoodUser", JSON.stringify({
+        ...data.user,
+        loggedIn: true
+      }));
 
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          showMessage("authMessage", err.error || "Login failed.", "error");
-          return;
-        }
+      showMessage("authMessage", "Login successful!", "success");
 
-        const data = await res.json();
-
-        if (!data.ok) {
-          showMessage("authMessage", data.error || "Login failed.", "error");
-          return;
-        }
-
-        localStorage.setItem("nutrimoodToken", data.token);
-        const userObj = { ...data.user, loggedIn: true };
-        localStorage.setItem("nutrimoodUser", JSON.stringify(userObj));
-
-        showMessage("authMessage", "Login successful!");
-
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 700);
-      } catch (error) {
-        showMessage("authMessage", "Backend connection failed. Please start backend server.", "error");
-      }
-    })();
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 600);
+    } catch (error) {
+      console.error("Login error:", error);
+      showMessage("authMessage", "Backend connection failed. Please try again.", "error");
+    }
   });
 
-  signupForm.addEventListener("submit", (e) => {
+  signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    (async () => {
-      const name = document.getElementById("signupName").value.trim();
-      const email = document.getElementById("signupEmail").value.trim();
-      const password = document.getElementById("signupPassword").value.trim();
-      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-      if (!name || !email || !password || !confirmPassword) {
-        showMessage("authMessage", "Please fill all fields.", "error");
+    if (!name || !email || !password || !confirmPassword) {
+      showMessage("authMessage", "Please fill all fields.", "error");
+      return;
+    }
+
+    if (password.length < 6) {
+      showMessage("authMessage", "Password must be at least 6 characters.", "error");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      showMessage("authMessage", "Passwords do not match.", "error");
+      return;
+    }
+
+    try {
+      showMessage("authMessage", "Creating account...", "success");
+
+      const response = await fetch(`${AUTH_API}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.ok) {
+        showMessage("authMessage", data.error || "Signup failed.", "error");
         return;
       }
 
-      if (password.length < 6) {
-        showMessage("authMessage", "Password must be at least 6 characters.", "error");
-        return;
-      }
+      localStorage.setItem("nutrimoodToken", data.token);
+      localStorage.setItem("nutrimoodUser", JSON.stringify({
+        ...data.user,
+        loggedIn: true
+      }));
 
-      if (password !== confirmPassword) {
-        showMessage("authMessage", "Passwords do not match.", "error");
-        return;
-      }
+      showMessage("authMessage", "Account created successfully!", "success");
 
-      try {
-        const res = await fetch(`${AUTH_API}/signup`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password })
-        });
-
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          showMessage("authMessage", err.error || "Signup failed.", "error");
-          return;
-        }
-
-        const data = await res.json();
-
-        if (!data.ok) {
-          showMessage("authMessage", data.error || "Signup failed.", "error");
-          return;
-        }
-
-        localStorage.setItem("nutrimoodToken", data.token);
-        localStorage.setItem("nutrimoodUser", JSON.stringify({ ...data.user, loggedIn: true }));
-
-        addHistory({
-          type: "account",
-          title: "Account Created",
-          details: `Welcome ${name}`
-        });
-
-        showMessage("authMessage", "Account created successfully!");
-
-        setTimeout(() => {
-          window.location.href = "basic-details.html";
-        }, 700);
-      } catch (error) {
-        showMessage("authMessage", "Backend connection failed. Please start backend server.", "error");
-      }
-    })();
+      setTimeout(() => {
+        window.location.href = "basic-details.html";
+      }, 600);
+    } catch (error) {
+      console.error("Signup error:", error);
+      showMessage("authMessage", "Backend connection failed. Please try again.", "error");
+    }
   });
 
   if (demoLoginBtn) {
@@ -291,15 +310,14 @@ function setupPasswordToggle() {
 }
 
 function setupLogout() {
-  const logoutButtons = document.querySelectorAll("#logoutBtn, #settingsLogoutBtn");
+  const logoutButtons = document.querySelectorAll(
+    "#logoutBtn, #settingsLogoutBtn, .logout-btn, [data-action='logout']"
+  );
 
   logoutButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      // Clear session items
-      localStorage.removeItem("nutrimoodUser");
-      localStorage.removeItem("nutrimoodToken");
-
-      window.location.href = "index.html";
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      logoutUser();
     });
   });
 }
@@ -311,14 +329,37 @@ function setupSidebar() {
 
   if (!sidebar || !menuBtn || !overlay) return;
 
-  menuBtn.addEventListener("click", () => {
+  function openSidebar() {
     sidebar.classList.add("active");
     overlay.classList.add("active");
-  });
+    document.body.classList.add("sidebar-open");
+  }
 
-  overlay.addEventListener("click", () => {
+  function closeSidebar() {
     sidebar.classList.remove("active");
     overlay.classList.remove("active");
+    document.body.classList.remove("sidebar-open");
+  }
+
+  menuBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (sidebar.classList.contains("active")) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
+  });
+
+  overlay.addEventListener("click", closeSidebar);
+
+  sidebar.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeSidebar);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeSidebar();
   });
 }
 
@@ -343,4 +384,22 @@ document.addEventListener("DOMContentLoaded", () => {
   setupLogout();
   setupSidebar();
   loadProfileInitial();
+  setupFloatingLuckyBot();
 });
+
+
+// Floating Lucky Bot handler (for pages that load auth.js)
+function setupFloatingLuckyBot() {
+  const bot = document.getElementById("floatingLuckyBot");
+  if (!bot) return;
+
+  bot.addEventListener("click", function () {
+    const user = JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+
+    if (user && user.loggedIn) {
+      window.location.href = "lucky-ai.html";
+    } else {
+      window.location.href = "login.html";
+    }
+  });
+}

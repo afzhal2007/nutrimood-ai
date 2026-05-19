@@ -11,11 +11,17 @@ const scanRoutes = require("../routes/scanRoutes");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "*"
-  })
-);
+app.use(cors({
+  origin: [
+    "https://nutrimood-ai.netlify.app",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+app.options("*", cors());
 
 app.use(express.json());
 
@@ -297,6 +303,13 @@ app.post("/api/scan-food", (req, res) => {
   res.json({
     ok: true,
     result
+  });
+});
+
+app.get("/api/test", (req, res) => {
+  res.json({
+    ok: true,
+    message: "API test working"
   });
 });
 
