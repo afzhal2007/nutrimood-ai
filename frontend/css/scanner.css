@@ -1,0 +1,84 @@
+/* Food scanner page styles */
+.upload-card {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 28px;
+  border-radius: 28px;
+  background: var(--card-bg);
+  border: 2px dashed rgba(16, 185, 129, 0.35);
+  transition: 0.35s ease;
+  margin-bottom: 18px;
+}
+
+.upload-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 45px rgba(16, 185, 129, 0.18);
+}
+
+.upload-icon {
+  width: 78px;
+  height: 78px;
+  border-radius: 28px;
+  display: grid;
+  place-items: center;
+  background: var(--main-gradient);
+  color: #fff;
+  font-size: 2.4rem;
+  margin-bottom: 16px;
+}
+
+.upload-card h3 {
+  margin-bottom: 8px;
+}
+
+.upload-card p {
+  color: var(--text-muted);
+}
+
+.image-preview-box {
+  min-height: 310px;
+  border-radius: 28px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.preview-placeholder {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.preview-placeholder span {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.scan-result-note {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: var(--text-muted);
+  line-height: 1.7;
+}

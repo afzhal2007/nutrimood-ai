@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dashboard | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <!-- ================= DASHBOARD LAYOUT ================= -->
+  <div class="dashboard-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link active">
+          <span>🏠</span>
+          Dashboard
+        </a>
+
+        <a href="mood-check.html" class="side-link">
+          <span>🧠</span>
+          Mood Check
+        </a>
+
+        <a href="recommendations.html" class="side-link">
+          <span>🥗</span>
+          Recommendations
+        </a>
+
+        <a href="food-scanner.html" class="side-link">
+          <span>🍱</span>
+          Food Scanner
+        </a>
+
+        <a href="lucky-ai.html" class="side-link">
+          <span>🤖</span>
+          Lucky AI
+        </a>
+
+        <a href="history.html" class="side-link">
+          <span>📊</span>
+          History
+        </a>
+
+        <a href="profile.html" class="side-link">
+          <span>👤</span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle" aria-label="Toggle theme">
+          <span class="sun">☀️</span>
+          <span class="toggle-ball"></span>
+          <span class="moon">🌙</span>
+        </button>
+
+        <button class="logout-btn" id="logoutBtn">
+          <span>🚪</span>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="dashboard-main">
+
+      <!-- ================= TOP BAR ================= -->
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn" aria-label="Open sidebar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">Welcome back,</p>
+          <h1 id="dashboardUserName">Afzhal 👋</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="lucky-ai.html" class="topbar-ai-btn">
+            Ask Lucky AI
+            <span>🤖</span>
+          </a>
+
+          <div class="profile-mini">
+            <span id="profileInitial">A</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ================= HERO DASHBOARD CARD ================= -->
+      <section class="dashboard-hero-card">
+        <div class="dash-hero-content">
+          <div class="tag">
+            <span>✨</span>
+            Today’s AI Wellness Summary
+          </div>
+
+          <h2>
+            Your mood looks
+            <span id="todayMoodText">Balanced</span>
+          </h2>
+
+          <p>
+            Start a mood check to get accurate food recommendations and store
+            today’s result in your NutriMood history.
+          </p>
+
+          <div class="dash-hero-buttons">
+            <a href="mood-check.html" class="primary-btn">
+              Start Mood Check
+              <span>→</span>
+            </a>
+
+            <a href="recommendations.html" class="secondary-btn">
+              View Foods
+              <span>🥗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="dash-hero-visual">
+          <div class="dashboard-brain">
+            🧠
+            <span class="brain-ring ring-one"></span>
+            <span class="brain-ring ring-two"></span>
+            <span class="brain-ring ring-three"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= STATS CARDS ================= -->
+      <section class="dashboard-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon green">😊</div>
+          <div>
+            <p>Current Mood</p>
+            <h3 id="currentMood">Neutral</h3>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon purple">🔥</div>
+          <div>
+            <p>Mood Streak</p>
+            <h3 id="moodStreak">3 Days</h3>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon cyan">🥗</div>
+          <div>
+            <p>Nutrition Score</p>
+            <h3 id="nutritionScore">82%</h3>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon orange">🤖</div>
+          <div>
+            <p>AI Chats</p>
+            <h3 id="aiChatsCount">12</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DASHBOARD GRID ================= -->
+      <section class="dashboard-grid">
+
+        <!-- QUICK ACTIONS -->
+        <div class="dashboard-panel quick-actions-panel">
+          <div class="panel-heading">
+            <h2>Quick Actions</h2>
+            <p>Start your wellness flow</p>
+          </div>
+
+          <div class="quick-actions">
+            <a href="mood-check.html" class="quick-action-card">
+              <span>📷</span>
+              <h3>Face Mood</h3>
+              <p>Analyze expression</p>
+            </a>
+
+            <a href="mood-check.html" class="quick-action-card">
+              <span>🎙️</span>
+              <h3>Voice Mood</h3>
+              <p>Analyze voice/text</p>
+            </a>
+
+            <a href="food-scanner.html" class="quick-action-card">
+              <span>🍱</span>
+              <h3>Food Scan</h3>
+              <p>Upload food image</p>
+            </a>
+
+            <a href="lucky-ai.html" class="quick-action-card">
+              <span>🤖</span>
+              <h3>Lucky AI</h3>
+              <p>Ask anything</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- TODAY RECOMMENDATIONS -->
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Today’s Foods</h2>
+            <p>Based on your latest mood</p>
+          </div>
+
+          <div class="today-foods" id="todayFoods">
+            <div class="today-food-card">
+              <span>🍌</span>
+              <div>
+                <h3>Banana</h3>
+                <p>Quick energy support</p>
+              </div>
+            </div>
+
+            <div class="today-food-card">
+              <span>🥜</span>
+              <div>
+                <h3>Almonds</h3>
+                <p>Healthy fats and focus</p>
+              </div>
+            </div>
+
+            <div class="today-food-card">
+              <span>🍵</span>
+              <div>
+                <h3>Green Tea</h3>
+                <p>Calm and refresh</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="recommendations.html" class="panel-link">
+            View all recommendations →
+          </a>
+        </div>
+
+        <!-- MOOD HISTORY -->
+        <div class="dashboard-panel wide-panel">
+          <div class="panel-heading">
+            <h2>Mood History</h2>
+            <p>This week preview</p>
+          </div>
+
+          <div class="mood-chart">
+            <div class="chart-bar" style="height: 55%">
+              <span>😊</span>
+              <p>Mon</p>
+            </div>
+
+            <div class="chart-bar" style="height: 70%">
+              <span>🙂</span>
+              <p>Tue</p>
+            </div>
+
+            <div class="chart-bar" style="height: 45%">
+              <span>😴</span>
+              <p>Wed</p>
+            </div>
+
+            <div class="chart-bar" style="height: 80%">
+              <span>😊</span>
+              <p>Thu</p>
+            </div>
+
+            <div class="chart-bar" style="height: 60%">
+              <span>😣</span>
+              <p>Fri</p>
+            </div>
+
+            <div class="chart-bar" style="height: 75%">
+              <span>😄</span>
+              <p>Sat</p>
+            </div>
+
+            <div class="chart-bar active" style="height: 90%">
+              <span>🔥</span>
+              <p>Today</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- LUCKY AI PREVIEW -->
+        <div class="dashboard-panel lucky-dashboard-panel">
+          <div class="panel-heading">
+            <h2>Lucky AI</h2>
+            <p>Your nutrition assistant</p>
+          </div>
+
+          <div class="mini-chat">
+            <div class="mini-message bot">
+              Hi Afzhal! Want a food plan for your current mood?
+            </div>
+
+            <div class="mini-message user">
+              Yes, suggest something for tired mood.
+            </div>
+
+            <div class="mini-message bot">
+              Try banana, dates, water, oats, and nuts for quick energy.
+            </div>
+          </div>
+
+          <a href="lucky-ai.html" class="primary-btn full-btn">
+            Open Chat
+            <span>💬</span>
+          </a>
+        </div>
+
+        <!-- HEALTH TIPS -->
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Daily Tips</h2>
+            <p>Small actions, better mood</p>
+          </div>
+
+          <ul class="tips-list">
+            <li>
+              <span>💧</span>
+              Drink enough water today.
+            </li>
+
+            <li>
+              <span>🚶</span>
+              Take a 10-minute walk.
+            </li>
+
+            <li>
+              <span>🥗</span>
+              Add fruits or nuts to your meal.
+            </li>
+
+            <li>
+              <span>😴</span>
+              Sleep at the right time.
+            </li>
+          </ul>
+        </div>
+
+        <!-- PROFILE SUMMARY -->
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Profile Summary</h2>
+            <p>Your account details</p>
+          </div>
+
+          <div class="profile-summary">
+            <div class="profile-avatar-large" id="profileAvatarLarge">A</div>
+
+            <div>
+              <h3 id="profileName">Afzhal</h3>
+              <p id="profileEmail">demo@gmail.com</p>
+            </div>
+          </div>
+
+          <a href="profile.html" class="panel-link">
+            Edit profile →
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Sidebar overlay for mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- JS -->
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

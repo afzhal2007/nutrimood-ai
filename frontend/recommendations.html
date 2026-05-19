@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recommendations | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/recommendations.css" />
+</head>
+
+<body>
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link"><span>🏠</span>Dashboard</a>
+        <a href="mood-check.html" class="side-link"><span>🧠</span>Mood Check</a>
+        <a href="recommendations.html" class="side-link active"><span>🥗</span>Recommendations</a>
+        <a href="food-scanner.html" class="side-link"><span>🍱</span>Food Scanner</a>
+        <a href="lucky-ai.html" class="side-link"><span>🤖</span>Lucky AI</a>
+        <a href="history.html" class="side-link"><span>📊</span>History</a>
+        <a href="round-score.html" class="side-link"><span>🏆</span>Round Score</a>
+        <a href="profile.html" class="side-link"><span>👤</span>Profile</a>
+        <a href="settings.html" class="side-link"><span>⚙️</span>Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle">
+          <span>☀️</span><span class="toggle-ball"></span><span>🌙</span>
+        </button>
+        <button class="logout-btn" id="logoutBtn"><span>🚪</span>Logout</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">Mood-based food plan</p>
+          <h1>Recommendations 🥗</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="mood-check.html" class="topbar-ai-btn">New Mood Check <span>🧠</span></a>
+          <div class="profile-mini"><span id="profileInitial">A</span></div>
+        </div>
+      </header>
+
+      <section class="dashboard-hero-card">
+        <div class="dash-hero-content">
+          <div class="tag"><span>✨</span> Personalized Food Suggestions</div>
+          <h2>Foods for your current mood: <span id="recommendMood">Happy</span></h2>
+          <p>
+            NutriMood AI suggests foods based on your mood, health goal,
+            food preference, and stored profile.
+          </p>
+
+          <div class="dash-hero-buttons">
+            <button class="primary-btn" id="savePlanBtn">Save Plan <span>💾</span></button>
+            <a href="lucky-ai.html" class="secondary-btn">Ask Lucky AI <span>🤖</span></a>
+          </div>
+        </div>
+
+        <div class="dash-hero-visual">
+          <div class="dashboard-brain">🥗</div>
+        </div>
+      </section>
+
+      <section class="dashboard-panel">
+        <div class="panel-heading">
+          <h2>Select Mood</h2>
+          <p>Food plan will change based on mood.</p>
+        </div>
+
+        <div class="mood-grid">
+          <button class="mood-card active" data-mood="Happy">😊 <h3>Happy</h3></button>
+          <button class="mood-card" data-mood="Sad">😔 <h3>Sad</h3></button>
+          <button class="mood-card" data-mood="Stress">😣 <h3>Stress</h3></button>
+          <button class="mood-card" data-mood="Tired">😴 <h3>Tired</h3></button>
+          <button class="mood-card" data-mood="Angry">😡 <h3>Angry</h3></button>
+          <button class="mood-card" data-mood="Neutral">🙂 <h3>Neutral</h3></button>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="dashboard-panel wide-panel">
+          <div class="panel-heading">
+            <h2>Recommended Foods</h2>
+            <p>Best food matches for your mood.</p>
+          </div>
+
+          <div class="food-list" id="foodList">
+            <div class="food-card">
+              <div class="food-emoji">🍌</div>
+              <h3>Banana</h3>
+              <p>Quick energy and mood support.</p>
+            </div>
+
+            <div class="food-card">
+              <div class="food-emoji">🥜</div>
+              <h3>Almonds</h3>
+              <p>Supports focus and healthy fats.</p>
+            </div>
+
+            <div class="food-card">
+              <div class="food-emoji">🍵</div>
+              <h3>Green Tea</h3>
+              <p>Calm and refreshing drink.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Nutrition Benefits</h2>
+            <p>Why these foods help.</p>
+          </div>
+
+          <ul class="tips-list" id="benefitList">
+            <li><span>⚡</span> Improves energy level</li>
+            <li><span>🧠</span> Supports brain focus</li>
+            <li><span>😊</span> Helps emotional balance</li>
+            <li><span>💧</span> Add water for better results</li>
+          </ul>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Daily Tip</h2>
+            <p>Small habit for better mood.</p>
+          </div>
+
+          <div class="mini-chat">
+            <div class="mini-message bot" id="dailyTip">
+              Eat light, drink water, and take a 10-minute walk today.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/recommendations.js"></script>
+</body>
+</html>

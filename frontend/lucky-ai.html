@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Lucky AI | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/chat.css" />
+</head>
+
+<body>
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link"><span>🏠</span>Dashboard</a>
+        <a href="mood-check.html" class="side-link"><span>🧠</span>Mood Check</a>
+        <a href="recommendations.html" class="side-link"><span>🥗</span>Recommendations</a>
+        <a href="food-scanner.html" class="side-link"><span>🍱</span>Food Scanner</a>
+        <a href="lucky-ai.html" class="side-link active"><span>🤖</span>Lucky AI</a>
+        <a href="history.html" class="side-link"><span>📊</span>History</a>
+        <a href="round-score.html" class="side-link"><span>🏆</span>Round Score</a>
+        <a href="profile.html" class="side-link"><span>👤</span>Profile</a>
+        <a href="settings.html" class="side-link"><span>⚙️</span>Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle">
+          <span>☀️</span><span class="toggle-ball"></span><span>🌙</span>
+        </button>
+        <button class="logout-btn" id="logoutBtn"><span>🚪</span>Logout</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">Mood nutrition assistant</p>
+          <h1>Lucky AI 🤖</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="topbar-ai-btn" id="clearChatBtn">Clear Chat <span>🧹</span></button>
+          <div class="profile-mini"><span id="profileInitial">A</span></div>
+        </div>
+      </header>
+
+      <section class="chat-layout">
+        <div class="chat-panel">
+          <div class="chat-header">
+            <div class="bot-avatar">🤖</div>
+            <div>
+              <h3>Lucky AI</h3>
+              <p>Online • Mood-based nutrition assistant</p>
+            </div>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="message bot-msg">
+              Hi! I am Lucky AI inside NutriMood AI. Ask me about mood-based foods.
+            </div>
+          </div>
+
+          <form class="chat-form" id="chatForm">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Example: I feel tired, what should I eat?"
+              autocomplete="off"
+              required
+            />
+            <button type="submit">➤</button>
+          </form>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Quick Prompts</h2>
+            <p>Click and ask faster.</p>
+          </div>
+
+          <div class="quick-prompts">
+            <button class="prompt-btn">I feel stressed, what should I eat?</button>
+            <button class="prompt-btn">Foods for tired mood?</button>
+            <button class="prompt-btn">Healthy snacks for focus?</button>
+            <button class="prompt-btn">What food helps happy mood?</button>
+          </div>
+
+          <div class="note-card warning">
+            <span>⚠️</span>
+            <p>Lucky AI gives general suggestions only, not medical advice.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

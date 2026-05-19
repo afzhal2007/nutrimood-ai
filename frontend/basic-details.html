@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Basic Details | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+
+<body>
+  <!-- BACKGROUND EFFECTS -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <main class="auth-page basic-details-page">
+    <!-- LEFT SIDE -->
+    <section class="auth-brand-section">
+      <a href="index.html" class="auth-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <div class="auth-brand-content">
+        <div class="tag">
+          <span>👤</span>
+          Personal Setup
+        </div>
+
+        <h1>
+          Setup your
+          <span>nutrition profile</span>
+        </h1>
+
+        <p>
+          These details help NutriMood AI give better mood-based food
+          recommendations, dashboard insights, and Lucky AI answers.
+        </p>
+
+        <div class="auth-feature-list">
+          <div class="auth-feature">
+            <span>🥗</span>
+            <div>
+              <h3>Food Preference</h3>
+              <p>Veg, non-veg, vegan, or mixed food plans.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature">
+            <span>🎯</span>
+            <div>
+              <h3>Health Goal</h3>
+              <p>Energy, focus, stress control, weight gain or weight loss.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature">
+            <span>🤖</span>
+            <div>
+              <h3>Lucky AI Personalization</h3>
+              <p>AI suggestions based on your profile and mood history.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT FORM SIDE -->
+    <section class="auth-form-section">
+      <div class="auth-card basic-details-card">
+        <div class="auth-card-header">
+          <h2>Basic Details</h2>
+          <p>Complete your profile to continue.</p>
+        </div>
+
+        <form id="basicDetailsForm" class="auth-form">
+          <!-- FULL NAME -->
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+
+          <!-- AGE + GENDER -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input
+                type="number"
+                id="age"
+                min="10"
+                max="100"
+                placeholder="Example: 18"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select id="gender" required>
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- HEIGHT + WEIGHT -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="height">Height</label>
+              <input
+                type="number"
+                id="height"
+                min="80"
+                max="250"
+                placeholder="Height in cm"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="weight">Weight</label>
+              <input
+                type="number"
+                id="weight"
+                min="20"
+                max="250"
+                placeholder="Weight in kg"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- FOOD PREFERENCE -->
+          <div class="form-group">
+            <label for="foodPreference">Food Preference</label>
+            <select id="foodPreference" required>
+              <option value="">Choose preference</option>
+              <option value="Vegetarian">Vegetarian</option>
+              <option value="Non-Vegetarian">Non-Vegetarian</option>
+              <option value="Eggetarian">Eggetarian</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Mixed">Mixed</option>
+            </select>
+          </div>
+
+          <!-- HEALTH GOAL -->
+          <div class="form-group">
+            <label for="healthGoal">Main Health Goal</label>
+            <select id="healthGoal" required>
+              <option value="">Choose your goal</option>
+              <option value="Improve Mood">Improve Mood</option>
+              <option value="Increase Energy">Increase Energy</option>
+              <option value="Reduce Stress">Reduce Stress</option>
+              <option value="Improve Focus">Improve Focus</option>
+              <option value="Weight Gain">Weight Gain</option>
+              <option value="Weight Loss">Weight Loss</option>
+              <option value="Healthy Lifestyle">Healthy Lifestyle</option>
+            </select>
+          </div>
+
+          <!-- ACTIVITY LEVEL -->
+          <div class="form-group">
+            <label for="activityLevel">Activity Level</label>
+            <select id="activityLevel" required>
+              <option value="">Choose activity level</option>
+              <option value="Low">Low - mostly sitting</option>
+              <option value="Moderate">Moderate - walking/exercise sometimes</option>
+              <option value="High">High - daily exercise/sports</option>
+            </select>
+          </div>
+
+          <!-- COMMON MOOD -->
+          <div class="form-group">
+            <label for="commonMood">Common Mood Problem</label>
+            <select id="commonMood" required>
+              <option value="">Choose common mood</option>
+              <option value="Stress">Stress</option>
+              <option value="Tired">Tired</option>
+              <option value="Sad">Sad</option>
+              <option value="Angry">Angry</option>
+              <option value="Anxious">Anxious</option>
+              <option value="Low Focus">Low Focus</option>
+              <option value="Neutral">Neutral</option>
+            </select>
+          </div>
+
+          <!-- ALLERGIES -->
+          <div class="form-group">
+            <label for="allergies">Allergies / Foods to Avoid</label>
+            <textarea
+              id="allergies"
+              rows="3"
+              placeholder="Example: peanuts, milk, egg, seafood. If none, type None."
+            ></textarea>
+          </div>
+
+          <!-- MEDICAL NOTE -->
+          <div class="medical-note">
+            <span>⚠️</span>
+            <p>
+              NutriMood AI gives general food suggestions only. It is not a
+              medical diagnosis. For serious health problems, consult a doctor.
+            </p>
+          </div>
+
+          <button type="submit" class="primary-btn auth-submit-btn">
+            Save & Continue
+            <span>→</span>
+          </button>
+        </form>
+
+        <button type="button" class="demo-login-btn" id="skipDetailsBtn">
+          Skip for now
+          <span>⏭️</span>
+        </button>
+
+        <p class="auth-message" id="basicDetailsMessage"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+
+  <script>
+    const basicDetailsForm = document.getElementById("basicDetailsForm");
+    const skipDetailsBtn = document.getElementById("skipDetailsBtn");
+    const basicDetailsMessage = document.getElementById("basicDetailsMessage");
+
+    const currentUser = JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+
+    if (!currentUser || !currentUser.loggedIn) {
+      window.location.href = "login.html";
+    }
+
+    if (currentUser) {
+      document.getElementById("fullName").value = currentUser.name || "";
+    }
+
+    basicDetailsForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const payload = {
+        name: document.getElementById("fullName").value.trim(),
+        age: document.getElementById("age").value.trim(),
+        gender: document.getElementById("gender").value,
+        height: document.getElementById("height").value.trim(),
+        weight: document.getElementById("weight").value.trim(),
+        foodPreference: document.getElementById("foodPreference").value,
+        healthGoal: document.getElementById("healthGoal").value,
+        activityLevel: document.getElementById("activityLevel").value,
+        commonMood: document.getElementById("commonMood").value,
+        allergies: document.getElementById("allergies").value.trim() || "None"
+      };
+
+      const token = localStorage.getItem("nutrimoodToken");
+      const userId = (currentUser && (currentUser.id || currentUser._id)) || null;
+
+      (async () => {
+        try {
+          if (userId && token) {
+            const res = await fetch(`${AUTH_API}/profile/${userId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+              },
+              body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              basicDetailsMessage.textContent = err.error || "Profile save failed.";
+              basicDetailsMessage.style.color = "#ef4444";
+              return;
+            }
+
+            const data = await res.json();
+
+            if (data.ok && data.user) {
+              const updatedUser = { ...data.user, loggedIn: true };
+              localStorage.setItem("nutrimoodUser", JSON.stringify(updatedUser));
+
+              const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
+
+              history.push({
+                type: "profile",
+                title: "Basic Details Completed",
+                date: new Date().toLocaleString(),
+                details: `Goal: ${updatedUser.healthGoal || payload.healthGoal}, Food: ${updatedUser.foodPreference || payload.foodPreference}`
+              });
+
+              localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+
+              basicDetailsMessage.textContent = "Profile saved successfully!";
+              basicDetailsMessage.style.color = "#22c55e";
+
+              setTimeout(function () {
+                window.location.href = "instructions.html";
+              }, 800);
+              return;
+            }
+          }
+
+          // Fallback: local update if no backend id/token (demo or offline)
+          const userDetails = {
+            ...currentUser,
+            ...payload,
+            profileCompleted: true,
+            loggedIn: true
+          };
+
+          updateUserInUsers(userDetails);
+
+          const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
+
+          history.push({
+            type: "profile",
+            title: "Basic Details Completed",
+            date: new Date().toLocaleString(),
+            details: `Goal: ${userDetails.healthGoal}, Food: ${userDetails.foodPreference}`
+          });
+
+          localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+
+          basicDetailsMessage.textContent = "Profile saved successfully!";
+          basicDetailsMessage.style.color = "#22c55e";
+
+          setTimeout(function () {
+            window.location.href = "instructions.html";
+          }, 800);
+        } catch (error) {
+          basicDetailsMessage.textContent = "Backend connection failed. Please start backend server.";
+          basicDetailsMessage.style.color = "#ef4444";
+        }
+      })();
+    });
+
+    skipDetailsBtn.addEventListener("click", function () {
+      const skippedUser = {
+        ...currentUser,
+        profileCompleted: false,
+        loggedIn: true
+      };
+
+      // Keep skip local only (do not call profile endpoint which forces profileCompleted=true)
+      localStorage.setItem("nutrimoodUser", JSON.stringify(skippedUser));
+
+      window.location.href = "instructions.html";
+    });
+  </script>
+</body>
+</html>

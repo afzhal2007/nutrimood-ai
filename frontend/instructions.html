@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Instructions | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <main class="instructions-page">
+    <!-- Top Logo -->
+    <header class="instructions-header">
+      <a href="index.html" class="auth-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="sun">☀️</span>
+        <span class="toggle-ball"></span>
+        <span class="moon">🌙</span>
+      </button>
+    </header>
+
+    <!-- Main Card -->
+    <section class="instructions-card">
+      <div class="instructions-hero">
+        <div class="tag">
+          <span>📘</span>
+          Before You Start
+        </div>
+
+        <h1>
+          How to use
+          <span>NutriMood AI</span>
+        </h1>
+
+        <p>
+          Follow these simple instructions to get better mood-based food
+          recommendations and use Lucky AI safely.
+        </p>
+      </div>
+
+      <!-- Instruction Steps -->
+      <div class="instruction-grid">
+        <div class="instruction-box">
+          <div class="instruction-icon green">01</div>
+          <h3>Start Mood Check</h3>
+          <p>
+            Go to Mood Check and choose Face Detection, Voice Analysis, or Self
+            Check. You can manually select your mood too.
+          </p>
+        </div>
+
+        <div class="instruction-box">
+          <div class="instruction-icon purple">02</div>
+          <h3>Allow Camera / Mic</h3>
+          <p>
+            For face mood detection, allow camera access. For voice mood
+            analysis, allow microphone access when the browser asks.
+          </p>
+        </div>
+
+        <div class="instruction-box">
+          <div class="instruction-icon orange">03</div>
+          <h3>Get Food Suggestions</h3>
+          <p>
+            NutriMood AI suggests foods based on your mood, profile, goal, and
+            food preference.
+          </p>
+        </div>
+
+        <div class="instruction-box">
+          <div class="instruction-icon cyan">04</div>
+          <h3>Ask Lucky AI</h3>
+          <p>
+            Ask Lucky AI for mood-based food tips, nutrition doubts, or general
+            wellness suggestions.
+          </p>
+        </div>
+
+        <div class="instruction-box">
+          <div class="instruction-icon pink">05</div>
+          <h3>Use Food Scanner</h3>
+          <p>
+            Upload a food image to preview basic nutrition details. Full AI
+            scanning can be connected later with backend.
+          </p>
+        </div>
+
+        <div class="instruction-box">
+          <div class="instruction-icon blue">06</div>
+          <h3>Track History</h3>
+          <p>
+            Your mood checks, food suggestions, and Lucky AI chats can be stored
+            in History after login.
+          </p>
+        </div>
+      </div>
+
+      <!-- Important Notes -->
+      <div class="instruction-notes">
+        <div class="note-card warning">
+          <span>⚠️</span>
+          <div>
+            <h3>Health Safety Note</h3>
+            <p>
+              NutriMood AI gives general food suggestions only. It does not
+              diagnose, treat, or cure medical conditions. For serious health
+              problems, consult a doctor or dietitian.
+            </p>
+          </div>
+        </div>
+
+        <div class="note-card privacy">
+          <span>🔒</span>
+          <div>
+            <h3>Privacy Note</h3>
+            <p>
+              In this frontend version, your data is stored only in your browser
+              using localStorage. Backend database storage can be added later.
+            </p>
+          </div>
+        </div>
+
+        <div class="note-card accuracy">
+          <span>🎯</span>
+          <div>
+            <h3>Accuracy Note</h3>
+            <p>
+              Mood detection accuracy can change based on lighting, camera
+              quality, background noise, and user input. Use self-check also for
+              better results.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permission Preview -->
+      <div class="permission-panel">
+        <div class="panel-heading">
+          <h2>Permissions Used</h2>
+          <p>These permissions are only needed when you use related features.</p>
+        </div>
+
+        <div class="permission-list">
+          <div class="permission-item">
+            <span>📷</span>
+            <div>
+              <h3>Camera</h3>
+              <p>Used for face mood detection.</p>
+            </div>
+          </div>
+
+          <div class="permission-item">
+            <span>🎙️</span>
+            <div>
+              <h3>Microphone</h3>
+              <p>Used for voice mood analysis.</p>
+            </div>
+          </div>
+
+          <div class="permission-item">
+            <span>🖼️</span>
+            <div>
+              <h3>Image Upload</h3>
+              <p>Used for food scanner preview.</p>
+            </div>
+          </div>
+
+          <div class="permission-item">
+            <span>💾</span>
+            <div>
+              <h3>Local Storage</h3>
+              <p>Used to save demo login, mood, and history data.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checklist -->
+      <form id="instructionsForm" class="instructions-check-form">
+        <label class="check-row">
+          <input type="checkbox" id="understandHealth" required />
+          <span>
+            I understand NutriMood AI is not medical advice.
+          </span>
+        </label>
+
+        <label class="check-row">
+          <input type="checkbox" id="understandData" required />
+          <span>
+            I understand my demo data is stored in this browser only.
+          </span>
+        </label>
+
+        <button type="submit" class="primary-btn instructions-btn">
+          Continue to Dashboard
+          <span>→</span>
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("nutrimoodUser")) || null;
+
+    if (!user || !user.loggedIn) {
+      window.location.href = "login.html";
+    }
+
+    const instructionsForm = document.getElementById("instructionsForm");
+
+    instructionsForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const token = localStorage.getItem("nutrimoodToken");
+      const userId = (user && (user.id || user._id)) || null;
+
+      (async () => {
+        try {
+          if (userId && token) {
+            const res = await fetch(`${AUTH_API}/instructions/${userId}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                ...(token ? { Authorization: `Bearer ${token}` } : {})
+              }
+            });
+
+            if (!res.ok) {
+              const err = await res.json().catch(() => ({}));
+              alert(err.error || "Instructions update failed.");
+              return;
+            }
+
+            const data = await res.json();
+
+            if (data.ok && data.user) {
+              const updatedUser = { ...data.user, loggedIn: true };
+              localStorage.setItem("nutrimoodUser", JSON.stringify(updatedUser));
+
+              const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
+
+              history.push({
+                type: "instructions",
+                title: "Instructions Accepted",
+                date: new Date().toLocaleString(),
+                details: "User accepted health, privacy, and accuracy notes."
+              });
+
+              localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+
+              window.location.href = "dashboard.html";
+              return;
+            }
+          }
+
+          // Fallback: local-only update
+          const updatedUser = {
+            ...user,
+            instructionsCompleted: true,
+            loggedIn: true
+          };
+
+          updateUserInUsers(updatedUser);
+
+          const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
+
+          history.push({
+            type: "instructions",
+            title: "Instructions Accepted",
+            date: new Date().toLocaleString(),
+            details: "User accepted health, privacy, and accuracy notes."
+          });
+
+          localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+
+          window.location.href = "dashboard.html";
+        } catch (error) {
+          alert("Backend connection failed. Please start backend server.");
+        }
+      })();
+    });
+
+    // Theme toggle fallback if script.js is not loaded
+    const themeToggle = document.getElementById("themeToggle");
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem("nutrimoodTheme") || "dark";
+    html.setAttribute("data-theme", savedTheme);
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", function () {
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("nutrimoodTheme", newTheme);
+      });
+    }
+  </script>
+</body>
+</html>

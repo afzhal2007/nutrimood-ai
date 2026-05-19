@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Login | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <main class="auth-page">
+    <!-- LEFT BRAND SIDE -->
+    <section class="auth-brand-section">
+      <a href="index.html" class="auth-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <div class="auth-brand-content">
+        <div class="tag">
+          <span>🤖</span>
+          Mood Based Nutrition AI
+        </div>
+
+        <h1>
+          Welcome to
+          <span>NutriMood AI</span>
+        </h1>
+
+        <p>
+          Login to store your mood history, food recommendations, Lucky AI chats,
+          and personal wellness dashboard.
+        </p>
+
+        <div class="auth-feature-list">
+          <div class="auth-feature">
+            <span>🧠</span>
+            <div>
+              <h3>Mood Analysis</h3>
+              <p>Analyze mood using face, voice, or self-check.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature">
+            <span>🥗</span>
+            <div>
+              <h3>Food Suggestions</h3>
+              <p>Get mood-based personalized food recommendations.</p>
+            </div>
+          </div>
+
+          <div class="auth-feature">
+            <span>🤖</span>
+            <div>
+              <h3>Lucky AI</h3>
+              <p>Ask AI for food tips and wellness guidance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT FORM SIDE -->
+    <section class="auth-form-section">
+      <div class="auth-card">
+        <div class="auth-card-header">
+          <h2 id="formTitle">Login</h2>
+          <p id="formSubtitle">Enter your details to continue.</p>
+        </div>
+
+        <!-- LOGIN / SIGNUP TOGGLE -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="loginTab" type="button">
+            Login
+          </button>
+
+          <button class="auth-tab" id="signupTab" type="button">
+            Signup
+          </button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="password-box">
+              <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="loginPassword">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="form-extra">
+            <label class="remember-box">
+              <input type="checkbox" id="rememberMe" />
+              <span>Remember me</span>
+            </label>
+
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="primary-btn auth-submit-btn">
+            Login
+            <span>→</span>
+          </button>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signupForm" class="auth-form hidden">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input
+              type="text"
+              id="signupName"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <input
+              type="email"
+              id="signupEmail"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <div class="password-box">
+              <input
+                type="password"
+                id="signupPassword"
+                placeholder="Create password"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="signupPassword">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="password-box">
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                required
+              />
+              <button type="button" class="password-toggle" data-target="confirmPassword">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="primary-btn auth-submit-btn">
+            Create Account
+            <span>→</span>
+          </button>
+        </form>
+
+        <!-- DEMO LOGIN -->
+        <button class="demo-login-btn" id="demoLoginBtn" type="button">
+          Continue as Demo User
+          <span>⚡</span>
+        </button>
+
+        <!-- MESSAGE -->
+        <p class="auth-message" id="authMessage"></p>
+
+        <p class="auth-bottom-text">
+          By continuing, you agree that NutriMood AI gives general food
+          suggestions only, not medical advice.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

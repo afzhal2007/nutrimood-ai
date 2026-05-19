@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Round Score | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link"><span>🏠</span>Dashboard</a>
+        <a href="mood-check.html" class="side-link"><span>🧠</span>Mood Check</a>
+        <a href="recommendations.html" class="side-link"><span>🥗</span>Recommendations</a>
+        <a href="food-scanner.html" class="side-link"><span>🍱</span>Food Scanner</a>
+        <a href="lucky-ai.html" class="side-link"><span>🤖</span>Lucky AI</a>
+        <a href="history.html" class="side-link"><span>📊</span>History</a>
+        <a href="round-score.html" class="side-link active"><span>🏆</span>Round Score</a>
+        <a href="profile.html" class="side-link"><span>👤</span>Profile</a>
+        <a href="settings.html" class="side-link"><span>⚙️</span>Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle">
+          <span>☀️</span><span class="toggle-ball"></span><span>🌙</span>
+        </button>
+        <button class="logout-btn" id="logoutBtn"><span>🚪</span>Logout</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">Your result summary</p>
+          <h1>Round Score 🏆</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="mood-check.html" class="topbar-ai-btn">New Round <span>🧠</span></a>
+          <div class="profile-mini"><span id="profileInitial">A</span></div>
+        </div>
+      </header>
+
+      <section class="dashboard-hero-card">
+        <div class="dash-hero-content">
+          <div class="tag"><span>✨</span> Wellness Performance</div>
+          <h2>Your round score is <span id="roundScoreText">86%</span></h2>
+          <p id="scoreFeedback">
+            Great progress! Your mood check and food recommendation match looks balanced.
+          </p>
+
+          <div class="dash-hero-buttons">
+            <a href="recommendations.html" class="primary-btn">View Foods <span>🥗</span></a>
+            <a href="lucky-ai.html" class="secondary-btn">Ask Lucky AI <span>🤖</span></a>
+          </div>
+        </div>
+
+        <div class="dash-hero-visual">
+          <div class="dashboard-brain" id="scoreNumber">86</div>
+        </div>
+      </section>
+
+      <section class="dashboard-stats">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon green">🧠</div>
+          <div><p>Mood Accuracy</p><h3 id="moodAccuracy">88%</h3></div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon purple">🥗</div>
+          <div><p>Nutrition Match</p><h3 id="nutritionMatch">84%</h3></div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon cyan">🤖</div>
+          <div><p>AI Guidance</p><h3 id="aiGuidance">90%</h3></div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon orange">🔥</div>
+          <div><p>Daily Streak</p><h3 id="dailyStreak">3 Days</h3></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Latest Mood</h2>
+            <p>Your last detected result.</p>
+          </div>
+
+          <div class="latest-mood-box">
+            <div class="latest-mood-icon" id="latestMoodIcon">😊</div>
+            <div>
+              <p>Detected Mood</p>
+              <h3 id="latestMood">Happy</h3>
+              <span id="latestMoodConfidence">Confidence: 88%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Next Actions</h2>
+            <p>Improve next score.</p>
+          </div>
+
+          <ul class="tips-list">
+            <li><span>🧠</span> Do one mood check daily.</li>
+            <li><span>🥗</span> Try one recommended food.</li>
+            <li><span>💧</span> Drink enough water.</li>
+            <li><span>🤖</span> Ask Lucky AI for food plan.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/round-score.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* Food recommendation page styles */
+.recommendation-page-title {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+#recommendMood {
+  background: var(--main-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.recommendation-section-panel {
+  padding: 24px;
+  border-radius: 28px;
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.recommendations-mood-wrapper {
+  margin-bottom: 24px;
+}
+
+.recommendation-food-grid,
+#foodList.food-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.recommendation-food-card,
+.food-card {
+  padding: 22px;
+  border-radius: 26px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  transition: 0.35s ease;
+}
+
+.recommendation-food-card:hover,
+.food-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 22px 45px rgba(16, 185, 129, 0.15);
+}
+
+.food-emoji {
+  width: 64px;
+  height: 64px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  background: rgba(16, 185, 129, 0.12);
+  margin-bottom: 14px;
+}
+
+.food-card h3 {
+  font-size: 1.12rem;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.food-card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
+.benefit-box {
+  display: grid;
+  gap: 12px;
+}
+
+.benefit-item {
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+}
+
+.daily-tip-card {
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(16, 185, 129, 0.16), transparent 35%),
+    var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.save-plan-success {
+  color: var(--primary);
+  font-weight: 900;
+  text-align: center;
+  margin-top: 14px;
+}

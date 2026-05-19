@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mood Check | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/mood.css" />
+</head>
+
+<body>
+  <!-- BACKGROUND EFFECTS -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link">
+          <span>🏠</span>
+          Dashboard
+        </a>
+
+        <a href="mood-check.html" class="side-link active">
+          <span>🧠</span>
+          Mood Check
+        </a>
+
+        <a href="recommendations.html" class="side-link">
+          <span>🥗</span>
+          Recommendations
+        </a>
+
+        <a href="food-scanner.html" class="side-link">
+          <span>🍱</span>
+          Food Scanner
+        </a>
+
+        <a href="lucky-ai.html" class="side-link">
+          <span>🤖</span>
+          Lucky AI
+        </a>
+
+        <a href="history.html" class="side-link">
+          <span>📊</span>
+          History
+        </a>
+
+        <a href="round-score.html" class="side-link">
+          <span>🏆</span>
+          Round Score
+        </a>
+
+        <a href="profile.html" class="side-link">
+          <span>👤</span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle" aria-label="Toggle theme">
+          <span class="sun">☀️</span>
+          <span class="toggle-ball"></span>
+          <span class="moon">🌙</span>
+        </button>
+
+        <button class="logout-btn" id="logoutBtn">
+          <span>🚪</span>
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+      <!-- TOPBAR -->
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn" aria-label="Open sidebar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">AI mood analysis</p>
+          <h1>Mood Check 🧠</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="recommendations.html" class="topbar-ai-btn">
+            Food Plan
+            <span>🥗</span>
+          </a>
+
+          <div class="profile-mini">
+            <span id="profileInitial">A</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- MOOD HERO -->
+      <section class="mood-hero-card">
+        <div class="mood-hero-content">
+          <div class="tag">
+            <span>✨</span>
+            Face • Voice • Self Check
+          </div>
+
+          <h2>
+            Analyze your mood and get
+            <span>smart food suggestions</span>
+          </h2>
+
+          <p>
+            Choose any mood detection method. For better accuracy, use self-check
+            along with face or voice analysis.
+          </p>
+
+          <div class="mood-hero-actions">
+            <button class="primary-btn" id="startCameraBtn" type="button">
+              Start Camera
+              <span>📷</span>
+            </button>
+
+            <button class="secondary-btn" id="startVoiceBtn" type="button">
+              Voice Check
+              <span>🎙️</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mood-ai-orbit">
+          <div class="mood-ai-core">🧠</div>
+          <span class="orbit-dot dot-one">😊</span>
+          <span class="orbit-dot dot-two">😔</span>
+          <span class="orbit-dot dot-three">😣</span>
+          <span class="orbit-dot dot-four">😴</span>
+        </div>
+      </section>
+
+      <!-- METHOD CARDS -->
+      <section class="mood-method-grid">
+        <div class="mood-method-card">
+          <div class="method-icon green">📷</div>
+          <h3>Face Detection</h3>
+          <p>
+            Use your camera to detect facial expression. This demo shows camera
+            preview and simulated result.
+          </p>
+
+          <button class="method-btn" id="cameraMethodBtn" type="button">
+            Use Camera
+          </button>
+        </div>
+
+        <div class="mood-method-card">
+          <div class="method-icon purple">🎙️</div>
+          <h3>Voice / Text Analysis</h3>
+          <p>
+            Speak or type how you feel. NutriMood AI will understand your
+            emotional tone.
+          </p>
+
+          <button class="method-btn" id="voiceMethodBtn" type="button">
+            Use Voice/Text
+          </button>
+        </div>
+
+        <div class="mood-method-card">
+          <div class="method-icon orange">🙂</div>
+          <h3>Self Check</h3>
+          <p>
+            Manually select your current mood. This improves recommendation
+            accuracy.
+          </p>
+
+          <button class="method-btn" id="selfMethodBtn" type="button">
+            Select Mood
+          </button>
+        </div>
+      </section>
+
+      <!-- ANALYSIS WORKSPACE -->
+      <section class="mood-workspace">
+        <!-- CAMERA PANEL -->
+        <div class="mood-panel" id="cameraPanel">
+          <div class="panel-heading">
+            <h2>Face Mood Detection</h2>
+            <p>Allow camera access and keep your face clearly visible.</p>
+          </div>
+
+          <div class="camera-box">
+            <video id="cameraVideo" autoplay playsinline muted></video>
+
+            <div class="camera-placeholder" id="cameraPlaceholder">
+              <span>📷</span>
+              <h3>Camera Preview</h3>
+              <p>Click “Start Camera” to preview your camera.</p>
+            </div>
+          </div>
+
+          <div class="panel-actions">
+            <button class="primary-btn small-btn" id="openCameraBtn" type="button">
+              Open Camera
+            </button>
+
+            <button class="secondary-btn small-btn" id="captureMoodBtn" type="button">
+              Analyze Face
+            </button>
+
+            <button class="danger-btn small-btn" id="stopCameraBtn" type="button">
+              Stop
+            </button>
+          </div>
+
+          <p class="small-note">
+            Note: Frontend version gives simulated mood result. Backend AI model
+            can be connected later.
+          </p>
+        </div>
+
+        <!-- VOICE PANEL -->
+        <div class="mood-panel" id="voicePanel">
+          <div class="panel-heading">
+            <h2>Voice / Text Mood Analysis</h2>
+            <p>Type or speak one sentence about how you feel now.</p>
+          </div>
+
+          <div class="voice-box">
+            <textarea
+              id="moodTextInput"
+              rows="5"
+              placeholder="Example: I feel tired and stressed today..."
+            ></textarea>
+
+            <div class="voice-actions">
+              <button class="secondary-btn small-btn" id="listenBtn" type="button">
+                Start Listening 🎙️
+              </button>
+
+              <button class="primary-btn small-btn" id="analyzeTextBtn" type="button">
+                Analyze Text
+              </button>
+            </div>
+          </div>
+
+          <p class="small-note">
+            Browser speech recognition support may differ. Text analysis works
+            in demo mode.
+          </p>
+        </div>
+
+        <!-- SELF CHECK PANEL -->
+        <div class="mood-panel" id="selfPanel">
+          <div class="panel-heading">
+            <h2>Self Mood Check</h2>
+            <p>Select the mood that matches your feeling right now.</p>
+          </div>
+
+          <div class="self-mood-grid">
+            <button class="self-mood-card active" data-mood="Happy" data-icon="😊">
+              <span>😊</span>
+              <h3>Happy</h3>
+            </button>
+
+            <button class="self-mood-card" data-mood="Sad" data-icon="😔">
+              <span>😔</span>
+              <h3>Sad</h3>
+            </button>
+
+            <button class="self-mood-card" data-mood="Stress" data-icon="😣">
+              <span>😣</span>
+              <h3>Stress</h3>
+            </button>
+
+            <button class="self-mood-card" data-mood="Tired" data-icon="😴">
+              <span>😴</span>
+              <h3>Tired</h3>
+            </button>
+
+            <button class="self-mood-card" data-mood="Angry" data-icon="😡">
+              <span>😡</span>
+              <h3>Angry</h3>
+            </button>
+
+            <button class="self-mood-card" data-mood="Neutral" data-icon="🙂">
+              <span>🙂</span>
+              <h3>Neutral</h3>
+            </button>
+          </div>
+        </div>
+
+        <!-- RESULT PANEL -->
+        <div class="mood-panel result-panel">
+          <div class="panel-heading">
+            <h2>Mood Result</h2>
+            <p>Your latest mood analysis preview.</p>
+          </div>
+
+          <div class="result-main">
+            <div class="result-icon" id="resultIcon">😊</div>
+
+            <div>
+              <p>Detected Mood</p>
+              <h3 id="resultMood">Happy</h3>
+              <span id="resultConfidence">Confidence: 92%</span>
+            </div>
+          </div>
+
+          <div class="confidence-breakdown">
+            <div class="confidence-item">
+              <div>
+                <span>Face Analysis</span>
+                <strong id="faceConfidenceText">0%</strong>
+              </div>
+
+              <div class="progress-track">
+                <div class="progress-fill" id="faceConfidenceBar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="confidence-item">
+              <div>
+                <span>Voice/Text Analysis</span>
+                <strong id="voiceConfidenceText">0%</strong>
+              </div>
+
+              <div class="progress-track">
+                <div class="progress-fill purple-fill" id="voiceConfidenceBar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="confidence-item">
+              <div>
+                <span>Self Check</span>
+                <strong id="selfConfidenceText">92%</strong>
+              </div>
+
+              <div class="progress-track">
+                <div class="progress-fill cyan-fill" id="selfConfidenceBar" style="width: 92%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-actions">
+            <button class="primary-btn" id="saveMoodBtn" type="button">
+              Save Mood
+              <span>💾</span>
+            </button>
+
+            <a href="recommendations.html" class="secondary-btn">
+              Get Foods
+              <span>🥗</span>
+            </a>
+
+            <a href="round-score.html" class="secondary-btn">
+              Round Score
+              <span>🏆</span>
+            </a>
+          </div>
+
+          <p class="auth-message" id="moodMessage"></p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/mood.js"></script>
+</body>
+</html>

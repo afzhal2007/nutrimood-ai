@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Profile | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+
+<body>
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link"><span>🏠</span>Dashboard</a>
+        <a href="mood-check.html" class="side-link"><span>🧠</span>Mood Check</a>
+        <a href="recommendations.html" class="side-link"><span>🥗</span>Recommendations</a>
+        <a href="food-scanner.html" class="side-link"><span>🍱</span>Food Scanner</a>
+        <a href="lucky-ai.html" class="side-link"><span>🤖</span>Lucky AI</a>
+        <a href="history.html" class="side-link"><span>📊</span>History</a>
+        <a href="round-score.html" class="side-link"><span>🏆</span>Round Score</a>
+        <a href="profile.html" class="side-link active"><span>👤</span>Profile</a>
+        <a href="settings.html" class="side-link"><span>⚙️</span>Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle">
+          <span>☀️</span><span class="toggle-ball"></span><span>🌙</span>
+        </button>
+        <button class="logout-btn" id="logoutBtn"><span>🚪</span>Logout</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">Personal details</p>
+          <h1>Profile 👤</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="settings.html" class="topbar-ai-btn">Settings <span>⚙️</span></a>
+          <div class="profile-mini"><span id="profileInitial">A</span></div>
+        </div>
+      </header>
+
+      <section class="dashboard-panel">
+        <div class="panel-heading">
+          <h2>Edit Profile</h2>
+          <p>Update your nutrition profile.</p>
+        </div>
+
+        <form id="profileForm" class="auth-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="profileNameInput" required />
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="profileEmailInput" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Age</label>
+              <input type="number" id="profileAgeInput" />
+            </div>
+
+            <div class="form-group">
+              <label>Gender</label>
+              <select id="profileGenderInput">
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Height</label>
+              <input type="number" id="profileHeightInput" placeholder="cm" />
+            </div>
+
+            <div class="form-group">
+              <label>Weight</label>
+              <input type="number" id="profileWeightInput" placeholder="kg" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Food Preference</label>
+            <select id="profileFoodInput">
+              <option>Vegetarian</option>
+              <option>Non-Vegetarian</option>
+              <option>Eggetarian</option>
+              <option>Vegan</option>
+              <option>Mixed</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Health Goal</label>
+            <select id="profileGoalInput">
+              <option>Improve Mood</option>
+              <option>Increase Energy</option>
+              <option>Reduce Stress</option>
+              <option>Improve Focus</option>
+              <option>Weight Gain</option>
+              <option>Weight Loss</option>
+              <option>Healthy Lifestyle</option>
+            </select>
+          </div>
+
+          <button type="submit" class="primary-btn auth-submit-btn">
+            Save Profile <span>💾</span>
+          </button>
+        </form>
+
+        <p class="auth-message" id="profileMessage"></p>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

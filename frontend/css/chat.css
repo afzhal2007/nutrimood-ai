@@ -1,0 +1,150 @@
+/* Lucky AI chat page styles */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 18px;
+}
+
+.chat-panel {
+  height: calc(100vh - 150px);
+  min-height: 620px;
+  border-radius: 30px;
+  background: var(--glass-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bot-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: var(--main-gradient);
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+}
+
+.chat-header h3 {
+  color: var(--text);
+}
+
+.chat-header p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.chat-body {
+  padding: 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.message {
+  max-width: 78%;
+  padding: 14px 16px;
+  border-radius: 20px;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  white-space: pre-line;
+}
+
+.user-msg {
+  align-self: flex-end;
+  background: var(--main-gradient);
+  color: #fff;
+  border-bottom-right-radius: 8px;
+}
+
+.bot-msg {
+  align-self: flex-start;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 8px;
+}
+
+.chat-form {
+  padding: 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+}
+
+.chat-form input {
+  flex: 1;
+  border: 1px solid var(--border);
+  outline: none;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 14px 18px;
+}
+
+.chat-form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.chat-form button {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--main-gradient);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.quick-prompts {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.prompt-btn {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  padding: 14px;
+  border-radius: 18px;
+  text-align: left;
+  font-weight: 800;
+  transition: 0.3s ease;
+}
+
+.prompt-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--primary);
+}
+
+.source-box {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.source-box a {
+  display: block;
+  color: var(--cyan);
+  font-weight: 800;
+  margin-top: 8px;
+}

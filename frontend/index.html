@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>NutriMood AI | Mood Based Nutrition Assistant</title>
+
+  <meta
+    name="description"
+    content="NutriMood AI is an AI-powered mood-based nutrition assistant that recommends foods based on your mood."
+  />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <!-- Background Effects -->
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="navbar">
+    <a href="index.html" class="logo-box">
+      <img src="assets/logo.png" alt="NutriMood AI Logo" class="logo-img" />
+      <span class="logo-text">NutriMood AI</span>
+    </a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" class="active">Home</a>
+      <a href="#features">Features</a>
+      <a href="#mood">Mood Check</a>
+      <a href="#recommendations">Recommendations</a>
+      <a href="#lucky-ai">Lucky AI</a>
+      <a href="#how">How It Works</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="sun">☀️</span>
+        <span class="toggle-ball"></span>
+        <span class="moon">🌙</span>
+      </button>
+
+      <a href="login.html" class="nav-btn">Get Started</a>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-content">
+        <div class="tag">
+          <span>🤖</span>
+          AI-Powered • Mood-Based Nutrition
+        </div>
+
+        <h1>
+          Eat Right For
+          <span>Your Mood</span>
+        </h1>
+
+        <p class="hero-text">
+          NutriMood AI analyzes your mood and suggests personalized foods to
+          improve your energy, focus, and emotional wellness.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="login.html" class="primary-btn">
+            Start Mood Check
+            <span>→</span>
+          </a>
+
+          <a href="login.html" class="secondary-btn">
+            Ask Lucky AI
+            <span>💬</span>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <h3>98%</h3>
+            <p>UI Accuracy Goal</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>25+</h3>
+            <p>Mood Types</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>200+</h3>
+            <p>Food Suggestions</p>
+          </div>
+
+          <div class="stat-card">
+            <h3>24/7</h3>
+            <p>Lucky AI Support</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="premium-brain-card">
+          <img 
+            src="assets/brain.png" 
+            alt="NutriMood AI Brain"
+            class="premium-brain-img"
+          />
+
+          <div class="mood-chip chip-one">😊 Happy</div>
+          <div class="mood-chip chip-two">😔 Sad</div>
+          <div class="mood-chip chip-three">😣 Stress</div>
+          <div class="mood-chip chip-four">😴 Tired</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES SECTION ================= -->
+    <section class="section features" id="features">
+      <div class="section-heading">
+        <span class="small-title">Premium Features</span>
+        <h2>Everything Your Mood Needs</h2>
+        <p>
+          Smart mood detection, food recommendations, food scanner, and Lucky AI
+          chatbot in one platform.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon green">📷</div>
+          <h3>Face Mood Detection</h3>
+          <p>
+            Detect mood using facial expression analysis with AI-powered
+            emotion recognition.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon purple">🎙️</div>
+          <h3>Voice Analysis</h3>
+          <p>
+            Analyze voice or text sentiment to understand how the user feels.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon orange">🥗</div>
+          <h3>Food Recommendation</h3>
+          <p>
+            Suggest mood-based foods like banana, almonds, oats, green tea, and
+            more.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon cyan">🤖</div>
+          <h3>Lucky AI Chatbot</h3>
+          <p>
+            Ask nutrition questions and get friendly AI guidance with source
+            links later.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon pink">🍱</div>
+          <h3>Food Scanner</h3>
+          <p>
+            Upload food images and preview nutrition details like calories and
+            protein.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon blue">📊</div>
+          <h3>Personal Dashboard</h3>
+          <p>
+            Store mood history, recommendations, chat history, and progress
+            after login.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MOOD CHECK SECTION ================= -->
+    <section class="section mood-section" id="mood">
+      <div class="section-heading">
+        <span class="small-title">Mood Analysis</span>
+        <h2>Choose How You Feel</h2>
+        <p>
+          Select a mood or login to use advanced face detection and voice
+          analysis.
+        </p>
+      </div>
+
+      <div class="mood-grid">
+        <button class="mood-card active" data-mood="Happy">
+          <span>😊</span>
+          <h3>Happy</h3>
+        </button>
+
+        <button class="mood-card" data-mood="Sad">
+          <span>😔</span>
+          <h3>Sad</h3>
+        </button>
+
+        <button class="mood-card" data-mood="Stress">
+          <span>😣</span>
+          <h3>Stress</h3>
+        </button>
+
+        <button class="mood-card" data-mood="Tired">
+          <span>😴</span>
+          <h3>Tired</h3>
+        </button>
+
+        <button class="mood-card" data-mood="Angry">
+          <span>😡</span>
+          <h3>Angry</h3>
+        </button>
+
+        <button class="mood-card" data-mood="Neutral">
+          <span>🙂</span>
+          <h3>Neutral</h3>
+        </button>
+      </div>
+
+      <div class="mood-result">
+        <div>
+          <p>Selected Mood</p>
+          <h3 id="selectedMood">Happy</h3>
+        </div>
+
+        <a href="login.html" class="primary-btn small-btn">
+          Analyze Fully
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= RECOMMENDATION SECTION ================= -->
+    <section class="section recommendation-section" id="recommendations">
+      <div class="section-heading">
+        <span class="small-title">Food Suggestions</span>
+        <h2>Recommended For Your Mood</h2>
+        <p>
+          Preview of mood-based food recommendation. Login to save your results.
+        </p>
+      </div>
+
+      <div class="recommendation-layout">
+        <div class="detected-card">
+          <div class="detected-icon" id="detectedIcon">😊</div>
+
+          <div>
+            <p>Detected Mood</p>
+            <h3 id="detectedMood">Happy</h3>
+            <span>Confidence Preview: 92%</span>
+          </div>
+        </div>
+
+        <div class="food-list" id="foodList">
+          <div class="food-card">
+            <div class="food-emoji">🥑</div>
+            <h3>Avocado</h3>
+            <p>Healthy fats for energy and focus.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-emoji">🍫</div>
+            <h3>Dark Chocolate</h3>
+            <p>Helps boost mood and feel-good vibes.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-emoji">🫐</div>
+            <h3>Blueberries</h3>
+            <p>Antioxidants for brain health.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-emoji">🥜</div>
+            <h3>Nuts</h3>
+            <p>Supports steady energy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LUCKY AI SECTION ================= -->
+    <section class="section lucky-section" id="lucky-ai">
+      <div class="lucky-content">
+        <span class="small-title">Lucky AI Assistant</span>
+        <h2>Chat With Lucky AI</h2>
+        <p>
+          Lucky AI helps users understand mood-based foods, nutrition tips, and
+          wellness suggestions.
+        </p>
+
+        <ul class="check-list">
+          <li>✅ Mood-based food advice</li>
+          <li>✅ Simple Tanglish explanation</li>
+          <li>✅ Internet search integration later</li>
+          <li>✅ User history after login</li>
+        </ul>
+
+        <a href="login.html" class="primary-btn">
+          Open Lucky AI
+          <span>💬</span>
+        </a>
+      </div>
+
+      <div class="chat-preview">
+        <div class="chat-header">
+          <div class="bot-avatar">🤖</div>
+          <div>
+            <h3>Lucky AI</h3>
+            <p>Online • Mood Nutrition Assistant</p>
+          </div>
+        </div>
+
+        <div class="chat-body">
+          <div class="message user-msg">
+            I feel tired. What should I eat?
+          </div>
+
+          <div class="message bot-msg">
+            Try banana, dates, water, almonds, and oats. These can support
+            energy and focus. Login to get a personalized plan.
+          </div>
+        </div>
+
+        <div class="chat-input-preview">
+          <span>Type your message...</span>
+          <button>➤</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOD SCANNER SECTION ================= -->
+    <section class="section scanner-section" id="scanner">
+      <div class="section-heading">
+        <span class="small-title">Food Scanner</span>
+        <h2>Upload Food. Get Nutrition Preview.</h2>
+        <p>
+          In full version, user can upload food image and get basic nutrition
+          details.
+        </p>
+      </div>
+
+      <div class="scanner-box">
+        <div class="upload-card">
+          <div class="upload-icon">📤</div>
+          <h3>Upload Food Image</h3>
+          <p>JPG, PNG, or WEBP supported.</p>
+
+          <a href="login.html" class="secondary-btn">
+            Login To Scan
+          </a>
+        </div>
+
+        <div class="nutrition-card">
+          <h3>Sample Nutrition Result</h3>
+
+          <div class="nutrition-row">
+            <span>Calories</span>
+            <strong>165 kcal</strong>
+          </div>
+
+          <div class="nutrition-row">
+            <span>Protein</span>
+            <strong>31g</strong>
+          </div>
+
+          <div class="nutrition-row">
+            <span>Carbs</span>
+            <strong>0g</strong>
+          </div>
+
+          <div class="nutrition-row">
+            <span>Fat</span>
+            <strong>3.6g</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="section how-section" id="how">
+      <div class="section-heading">
+        <span class="small-title">Process</span>
+        <h2>How NutriMood AI Works</h2>
+      </div>
+
+      <div class="steps">
+        <div class="step-card">
+          <span>01</span>
+          <h3>Login</h3>
+          <p>Create account to store mood and food history.</p>
+        </div>
+
+        <div class="step-card">
+          <span>02</span>
+          <h3>Detect Mood</h3>
+          <p>Use face, voice, or self-check mood analysis.</p>
+        </div>
+
+        <div class="step-card">
+          <span>03</span>
+          <h3>Get Food</h3>
+          <p>Receive personalized mood-based food suggestions.</p>
+        </div>
+
+        <div class="step-card">
+          <span>04</span>
+          <h3>Ask Lucky AI</h3>
+          <p>Chat and get more nutrition guidance.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FLOATING CHATBOT BUTTON ================= -->
+  <a href="login.html" class="floating-bot" aria-label="Open Lucky AI">
+    <span>🤖</span>
+  </a>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div>
+      <a href="index.html" class="footer-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <p>
+        AI-powered mood-based nutrition assistant. Developed by Afzhal.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="login.html">Login</a>
+      <a href="login.html">Get Started</a>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Scanner | NutriMood AI</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/scanner.css" />
+</head>
+
+<body>
+  <div class="bg-blur bg-blur-one"></div>
+  <div class="bg-blur bg-blur-two"></div>
+  <div class="bg-grid"></div>
+
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <a href="dashboard.html" class="sidebar-logo">
+        <img src="assets/logo.png" alt="NutriMood AI Logo" />
+        <span>NutriMood AI</span>
+      </a>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="side-link"><span>🏠</span>Dashboard</a>
+        <a href="mood-check.html" class="side-link"><span>🧠</span>Mood Check</a>
+        <a href="recommendations.html" class="side-link"><span>🥗</span>Recommendations</a>
+        <a href="food-scanner.html" class="side-link active"><span>🍱</span>Food Scanner</a>
+        <a href="lucky-ai.html" class="side-link"><span>🤖</span>Lucky AI</a>
+        <a href="history.html" class="side-link"><span>📊</span>History</a>
+        <a href="round-score.html" class="side-link"><span>🏆</span>Round Score</a>
+        <a href="profile.html" class="side-link"><span>👤</span>Profile</a>
+        <a href="settings.html" class="side-link"><span>⚙️</span>Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="theme-toggle dashboard-theme" id="themeToggle">
+          <span>☀️</span><span class="toggle-ball"></span><span>🌙</span>
+        </button>
+        <button class="logout-btn" id="logoutBtn"><span>🚪</span>Logout</button>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="dashboard-topbar">
+        <button class="dashboard-menu-btn" id="dashboardMenuBtn">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div>
+          <p class="welcome-small">AI food image preview</p>
+          <h1>Food Scanner 🍱</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="lucky-ai.html" class="topbar-ai-btn">Ask Lucky AI <span>🤖</span></a>
+          <div class="profile-mini"><span id="profileInitial">A</span></div>
+        </div>
+      </header>
+
+      <section class="dashboard-hero-card">
+        <div class="dash-hero-content">
+          <div class="tag"><span>📸</span> Food Image Scanner</div>
+          <h2>Upload your food image and get <span>nutrition preview</span></h2>
+          <p>
+            This frontend version shows image preview and sample nutrition.
+            Backend AI food detection can be connected later.
+          </p>
+        </div>
+
+        <div class="dash-hero-visual">
+          <div class="dashboard-brain">🍱</div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Upload Food</h2>
+            <p>JPG, PNG, WEBP supported.</p>
+          </div>
+
+          <label class="upload-card" for="foodImageInput">
+            <input type="file" id="foodImageInput" accept="image/*" hidden />
+            <div class="upload-icon">📤</div>
+            <h3>Choose Food Image</h3>
+            <p>Click here to upload your food photo.</p>
+          </label>
+
+          <button class="primary-btn full-btn" id="scanFoodBtn">
+            Scan Food <span>🔍</span>
+          </button>
+
+          <p class="auth-message" id="scannerMessage"></p>
+        </div>
+
+        <div class="dashboard-panel">
+          <div class="panel-heading">
+            <h2>Image Preview</h2>
+            <p>Your selected food image.</p>
+          </div>
+
+          <div class="image-preview-box">
+            <img id="foodPreview" src="" alt="Food preview" />
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <span>🖼️</span>
+              <p>No image selected</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel wide-panel">
+          <div class="panel-heading">
+            <h2>Nutrition Result</h2>
+            <p>Sample AI nutrition preview.</p>
+          </div>
+
+          <div class="nutrition-grid">
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon green">🔥</div>
+              <div><p>Calories</p><h3 id="calories">165 kcal</h3></div>
+            </div>
+
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon purple">💪</div>
+              <div><p>Protein</p><h3 id="protein">31g</h3></div>
+            </div>
+
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon cyan">🍚</div>
+              <div><p>Carbs</p><h3 id="carbs">22g</h3></div>
+            </div>
+
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon orange">🥑</div>
+              <div><p>Fat</p><h3 id="fat">5g</h3></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="js/auth.js"></script>
+  <script src="js/scanner.js"></script>
+</body>
+</html>
