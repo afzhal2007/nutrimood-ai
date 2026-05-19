@@ -313,6 +313,24 @@ app.get("/api/test", (req, res) => {
   });
 });
 
+app.get("/api/db-test", async (req, res) => {
+  try {
+    const mongoose = require("mongoose");
+
+    res.json({
+      ok: true,
+      mongoUriExists: !!process.env.MONGO_URI,
+      mongoState: mongoose.connection.readyState,
+      message: "DB test route working"
+    });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      error: error.message
+    });
+  }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/moods", moodRoutes);
 app.use("/api/chats", chatRoutes);
