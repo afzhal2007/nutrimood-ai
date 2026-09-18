@@ -11,47 +11,117 @@ const scanRoutes = require("../routes/scanRoutes");
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "https://nutrimood-ai.netlify.app",
-    "http://127.0.0.1:5500",
-    "http://localhost:5500"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+/* =========================
+   CORS
+========================= */
+
+const allowedOrigins = [
+  "https://nutrimood-ai.vercel.app",
+  "https://nutrimood-ai.netlify.app",
+  "http://127.0.0.1:5500",
+  "http://localhost:5500"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests without an Origin header
+      // such as Postman/server-to-server requests.
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("CORS: Origin not allowed"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ],
+    credentials: true
+  })
+);
 
 app.options("*", cors());
 
-app.use(express.json());
+/* =========================
+   BODY PARSER
+========================= */
 
-// Connect to MongoDB
-connectDB().catch((error) => {
-  console.error("Initial MongoDB connection failed:", error.message);
-});
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true }));
+
+/* =========================
+   DATABASE
+========================= */
+
+connectDB()
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.error(
+      "Initial MongoDB connection failed:",
+      error.message
+    );
+  });
+
+/* =========================
+   ROOT TEST
+========================= */
 
 app.get("/", (req, res) => {
-  res.json({
+  res.status(200).json({
     ok: true,
-    message: "NutriMood AI backend is running on Vercel"
+    message: "NutriMood AI backend is running on Vercel",
+    service: "NutriMood AI Backend",
+    status: "online"
   });
 });
 
+/* =========================
+   API HEALTH TEST
+========================= */
+
+app.get("/api/test", (req, res) => {
+  res.status(200).json({
+    ok: true,
+    message: "NutriMood AI API is working",
+    timestamp: new Date().toISOString()
+  });
+});
+
+/* =========================
+   LUCKY AI CHATBOT
+========================= */
+
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message, userProfile, latestMood } = req.body;
+    const {
+      message,
+      userProfile = {},
+      latestMood = {}
+    } = req.body || {};
 
-    if (!message || !message.trim()) {
+    if (!message || typeof message !== "string" || !message.trim()) {
       return res.status(400).json({
         ok: false,
         error: "Message is required"
       });
     }
 
-    if (!process.env.GROQ_API_KEY) {
+    const apiKey = process.env.GROQ_API_KEY;
+
+    if (!apiKey) {
+      console.error("GROQ_API_KEY is missing");
+
       return res.status(500).json({
         ok: false,
-        error: "Missing GROQ_API_KEY in backend environment"
+        error: "GROQ_API_KEY is missing in Vercel Environment Variables"
       });
     }
 
@@ -60,89 +130,142 @@ You are Lucky AI inside NutriMood AI, developed by Afzhal.
 
 You are a helpful mood-based nutrition assistant.
 
-You understand Indian, Tamil, and South Indian foods like idli, dosa, sambar, curd rice, lemon rice, tomato rice, pongal, vada, biryani, parotta, rasam, upma, chapati, rice, dal, fruits and nuts.
+You understand Indian, Tamil, and South Indian foods such as:
+- Idli
+- Dosa
+- Sambar
+- Curd rice
+- Lemon rice
+- Tomato rice
+- Pongal
+- Vada
+- Biryani
+- Parotta
+- Rasam
+- Upma
+- Chapati
+- Rice
+- Dal
+- Fruits
+- Nuts
 
-Your job:
-- Understand user's mood and food question.
-- Suggest suitable foods based on mood, food preference, health goal, and allergies.
-- If user asks about Tamil food, explain clearly.
-- If user uses Tanglish, reply in clear Tanglish.
-- If user uses English, reply in simple English.
-- Give practical food suggestions available in India/Tamil Nadu.
+Your responsibilities:
 
-Safety:
-- Do not diagnose disease.
-- Do not promise cure.
+1. Understand the user's mood.
+2. Understand the user's food question.
+3. Suggest suitable foods based on:
+   - Mood
+   - Food preference
+   - Health goal
+   - Allergies
+4. If the user asks about Tamil food, explain it clearly.
+5. If the user uses Tanglish, reply in clear Tanglish.
+6. If the user uses English, reply in simple English.
+7. Suggest foods that are realistically available in India/Tamil Nadu.
+
+Safety rules:
+- Do not diagnose diseases.
+- Do not claim that food can cure diseases.
 - Do not give extreme diet advice.
-- For serious symptoms, suggest consulting a doctor/dietitian.
-- Avoid foods listed in allergies.
+- Do not recommend foods that are listed as allergies.
+- For serious medical symptoms, suggest consulting a doctor or dietitian.
 
-Answer format:
-1. Short mood/food understanding.
-2. 4 to 6 food suggestions.
-3. Why each helps.
-4. One small lifestyle tip.
-5. Short safety note if needed.
-
-Keep answer useful and not too long.
+Answer style:
+- Keep the answer practical.
+- Keep the answer reasonably short.
+- Give 4 to 6 food suggestions when appropriate.
+- Explain briefly why each food is suitable.
+- Give one simple lifestyle tip.
 `;
 
     const profileContext = `
 User Profile:
-Name: ${userProfile?.name || "User"}
-Food Preference: ${userProfile?.foodPreference || "Not provided"}
-Health Goal: ${userProfile?.healthGoal || "Not provided"}
-Common Mood: ${userProfile?.commonMood || "Not provided"}
-Allergies/Foods to Avoid: ${userProfile?.allergies || "None"}
-Latest Mood: ${latestMood?.mood || "Not detected"}
+Name: ${userProfile.name || "User"}
+Food Preference: ${userProfile.foodPreference || "Not provided"}
+Health Goal: ${userProfile.healthGoal || "Not provided"}
+Common Mood: ${userProfile.commonMood || "Not provided"}
+Allergies/Foods to Avoid: ${userProfile.allergies || "None"}
+
+Latest Detected Mood:
+${latestMood.mood || "Not detected"}
 `;
 
-    const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "llama-3.1-8b-instant",
-        messages: [
-          {
-            role: "system",
-            content: systemPrompt
-          },
-          {
-            role: "user",
-            content: `${profileContext}\n\nUser Question: ${message}`
-          }
-        ],
-        temperature: 0.4,
-        max_tokens: 700
-      })
-    });
+    const groqResponse = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt
+            },
+            {
+              role: "user",
+              content: `
+${profileContext}
+
+User Question:
+${message.trim()}
+`
+            }
+          ],
+
+          temperature: 0.4,
+          max_tokens: 700
+        })
+      }
+    );
 
     const data = await groqResponse.json();
 
     if (!groqResponse.ok) {
+      console.error("Groq API error:", data);
+
       return res.status(groqResponse.status).json({
         ok: false,
-        error: data.error?.message || "Groq API error"
+        error:
+          data?.error?.message ||
+          "Groq API request failed"
       });
     }
 
-    const answer = data.choices?.[0]?.message?.content || "No response from Lucky AI.";
+    const answer =
+      data?.choices?.[0]?.message?.content?.trim();
 
-    res.json({
+    if (!answer) {
+      return res.status(500).json({
+        ok: false,
+        error: "Lucky AI returned an empty response"
+      });
+    }
+
+    return res.status(200).json({
       ok: true,
       answer
     });
+
   } catch (error) {
     console.error("Lucky AI backend error:", error);
-    res.status(500).json({
+
+    return res.status(500).json({
       ok: false,
-      error: "Server error. Please try again."
+      error: error.message || "Lucky AI server error"
     });
   }
 });
+
+/* =========================
+   FOOD DATABASE
+========================= */
 
 const foodDatabase = [
   {
@@ -153,9 +276,10 @@ const foodDatabase = [
     protein: "2g",
     carbs: "12g",
     fat: "0.4g",
-    moodBenefit: "Light food, good for neutral or tired mood.",
-    suggestion: "Best with sambar for protein and vegetables."
+    moodBenefit: "Light food, suitable when feeling tired or neutral.",
+    suggestion: "Best with sambar for extra protein and vegetables."
   },
+
   {
     keywords: ["dosa", "dosai"],
     name: "Dosa",
@@ -164,9 +288,10 @@ const foodDatabase = [
     protein: "3g",
     carbs: "25g",
     fat: "3g",
-    moodBenefit: "Gives energy because it has carbs.",
-    suggestion: "Use less oil and add sambar for better nutrition."
+    moodBenefit: "Provides carbohydrates for energy.",
+    suggestion: "Use less oil and have it with sambar."
   },
+
   {
     keywords: ["sambar", "sambhar"],
     name: "Sambar",
@@ -175,97 +300,131 @@ const foodDatabase = [
     protein: "5g",
     carbs: "18g",
     fat: "3g",
-    moodBenefit: "Dal and vegetables support energy and fullness.",
-    suggestion: "Good with idli, dosa, or rice."
+    moodBenefit: "Dal and vegetables provide protein and nutrients.",
+    suggestion: "Good with idli, dosa or rice."
   },
+
   {
-    keywords: ["curd rice", "thayir sadam", "yogurt rice"],
+    keywords: [
+      "curd rice",
+      "thayir sadam",
+      "yogurt rice"
+    ],
     name: "Curd Rice",
     category: "Tamil Food",
     calories: "220 kcal per bowl",
     protein: "6g",
     carbs: "35g",
     fat: "6g",
-    moodBenefit: "Cooling food, useful for angry or stressed mood.",
-    suggestion: "Add cucumber or carrot for better nutrition."
+    moodBenefit: "Comforting and cooling food.",
+    suggestion: "Add cucumber or carrot for extra nutrition."
   },
+
   {
-    keywords: ["lemon rice", "elumichai sadam"],
+    keywords: [
+      "lemon rice",
+      "elumichai sadam"
+    ],
     name: "Lemon Rice",
     category: "Tamil Food",
     calories: "250 kcal per bowl",
     protein: "5g",
     carbs: "42g",
     fat: "7g",
-    moodBenefit: "Quick energy food.",
+    moodBenefit: "Provides quick energy.",
     suggestion: "Add groundnuts for protein and healthy fats."
   },
+
   {
-    keywords: ["tomato rice", "thakkali sadam"],
+    keywords: [
+      "tomato rice",
+      "thakkali sadam"
+    ],
     name: "Tomato Rice",
     category: "Tamil Food",
     calories: "260 kcal per bowl",
     protein: "5g",
     carbs: "45g",
     fat: "7g",
-    moodBenefit: "Good comfort food for neutral mood.",
+    moodBenefit: "Comforting meal option.",
     suggestion: "Use less oil and add curd for balance."
   },
+
   {
-    keywords: ["pongal", "ven pongal"],
+    keywords: [
+      "pongal",
+      "ven pongal"
+    ],
     name: "Ven Pongal",
     category: "Tamil Food",
     calories: "300 kcal per bowl",
     protein: "8g",
     carbs: "45g",
     fat: "10g",
-    moodBenefit: "Comfort food, useful when tired.",
-    suggestion: "Good with sambar; avoid too much ghee."
+    moodBenefit: "Comfort food that can be suitable when tired.",
+    suggestion: "Have with sambar and avoid excessive ghee."
   },
+
   {
-    keywords: ["vada", "medu vada"],
+    keywords: [
+      "vada",
+      "medu vada"
+    ],
     name: "Medu Vada",
     category: "Tamil / South Indian",
     calories: "150 kcal per piece",
     protein: "5g",
     carbs: "15g",
     fat: "8g",
-    moodBenefit: "Protein from urad dal but fried food.",
-    suggestion: "Eat moderately, better with sambar."
+    moodBenefit: "Contains protein from urad dal but is fried.",
+    suggestion: "Eat moderately and pair with sambar."
   },
+
   {
-    keywords: ["biryani", "chicken biryani"],
+    keywords: [
+      "biryani",
+      "chicken biryani"
+    ],
     name: "Chicken Biryani",
     category: "Indian Food",
     calories: "500 kcal per plate",
     protein: "25g",
     carbs: "60g",
     fat: "18g",
-    moodBenefit: "High energy meal.",
-    suggestion: "Eat with curd/onion raita and avoid overeating."
+    moodBenefit: "High-energy meal.",
+    suggestion: "Pair with raita and avoid overeating."
   },
+
   {
-    keywords: ["parotta", "paratha"],
+    keywords: [
+      "parotta",
+      "paratha"
+    ],
     name: "Parotta",
     category: "Tamil Food",
     calories: "300 kcal per piece",
     protein: "6g",
     carbs: "40g",
     fat: "12g",
-    moodBenefit: "Heavy food, gives energy but may feel sleepy.",
-    suggestion: "Eat occasionally, pair with protein curry."
+    moodBenefit: "Heavy food that can provide energy.",
+    suggestion: "Eat occasionally and pair with a protein-rich curry."
   },
+
   {
-    keywords: ["banana", "vazhai pazham"],
+    keywords: [
+      "banana",
+      "vazhai pazham"
+    ],
     name: "Banana",
     category: "Fruit",
     calories: "105 kcal",
     protein: "1.3g",
     carbs: "27g",
     fat: "0.3g",
-    moodBenefit: "Good for tired mood and quick energy.",
-    suggestion: "Good pre-workout or evening snack."
+    moodBenefit: "Convenient source of carbohydrates and energy.",
+    suggestion: "Good as a snack or before exercise."
   },
+
   {
     keywords: ["apple"],
     name: "Apple",
@@ -274,60 +433,90 @@ const foodDatabase = [
     protein: "0.5g",
     carbs: "25g",
     fat: "0.3g",
-    moodBenefit: "Light snack for neutral mood.",
-    suggestion: "Good with nuts for better fullness."
+    moodBenefit: "Light and convenient snack.",
+    suggestion: "Pair with nuts for better fullness."
   }
 ];
+
+/* =========================
+   FOOD SEARCH
+========================= */
 
 const fallbackFood = {
   name: "Unknown Food",
   category: "General Food",
-  calories: "Not sure",
-  protein: "Not sure",
-  carbs: "Not sure",
-  fat: "Not sure",
-  moodBenefit: "Unable to identify accurately in frontend demo mode.",
-  suggestion: "Try typing the food name or connect AI vision backend for accurate scanning."
+  calories: "Not available",
+  protein: "Not available",
+  carbs: "Not available",
+  fat: "Not available",
+  moodBenefit: "Food could not be identified accurately.",
+  suggestion:
+    "Type the food name manually or connect an AI vision model for image-based identification."
 };
 
 function findBackendFood(foodName) {
-  if (!foodName) return null;
+  if (!foodName || typeof foodName !== "string") {
+    return null;
+  }
+
   const search = foodName.toLowerCase().trim();
+
   return foodDatabase.find((food) =>
-    food.keywords.some((keyword) => keyword.toLowerCase() === search)
+    food.keywords.some(
+      (keyword) =>
+        keyword.toLowerCase() === search
+    )
   );
 }
 
+/* =========================
+   FOOD SCAN
+========================= */
+
 app.post("/api/scan-food", (req, res) => {
-  const { foodName } = req.body || {};
-  const result = findBackendFood(foodName) || fallbackFood;
+  try {
+    const { foodName } = req.body || {};
 
-  res.json({
-    ok: true,
-    result
-  });
+    const result =
+      findBackendFood(foodName) ||
+      fallbackFood;
+
+    return res.status(200).json({
+      ok: true,
+      result
+    });
+
+  } catch (error) {
+    console.error("Food scan error:", error);
+
+    return res.status(500).json({
+      ok: false,
+      error: "Food scan failed"
+    });
+  }
 });
 
-app.get("/api/test", (req, res) => {
-  res.json({
-    ok: true,
-    message: "API test working"
-  });
-});
+/* =========================
+   DATABASE TEST
+========================= */
 
 app.get("/api/db-test", async (req, res) => {
   try {
     const mongoose = require("mongoose");
+
     await connectDB();
 
-    res.json({
+    return res.status(200).json({
       ok: true,
       mongoUriExists: !!process.env.MONGO_URI,
       mongoState: mongoose.connection.readyState,
-      message: "DB connected test working"
+      message: "MongoDB connection test completed"
     });
+
   } catch (error) {
-    res.status(500).json({
+    console.error("DB test error:", error);
+
+    return res.status(500).json({
       ok: false,
       mongoUriExists: !!process.env.MONGO_URI,
       error: error.message
@@ -335,23 +524,87 @@ app.get("/api/db-test", async (req, res) => {
   }
 });
 
+/* =========================
+   DATABASE MIDDLEWARE
+========================= */
+
 async function ensureDB(req, res, next) {
   try {
     await connectDB();
     next();
   } catch (error) {
-    console.error("Database middleware error:", error.message);
-    res.status(500).json({
+    console.error(
+      "Database middleware error:",
+      error.message
+    );
+
+    return res.status(500).json({
       ok: false,
       error: "Database connection failed"
     });
   }
 }
 
-app.use("/api/auth", ensureDB, authRoutes);
-app.use("/api/moods", ensureDB, moodRoutes);
-app.use("/api/chats", ensureDB, chatRoutes);
-app.use("/api/recommendations", ensureDB, recommendationRoutes);
-app.use("/api/scans", ensureDB, scanRoutes);
+/* =========================
+   ROUTES
+========================= */
+
+app.use(
+  "/api/auth",
+  ensureDB,
+  authRoutes
+);
+
+app.use(
+  "/api/moods",
+  ensureDB,
+  moodRoutes
+);
+
+app.use(
+  "/api/chats",
+  ensureDB,
+  chatRoutes
+);
+
+app.use(
+  "/api/recommendations",
+  ensureDB,
+  recommendationRoutes
+);
+
+app.use(
+  "/api/scans",
+  ensureDB,
+  scanRoutes
+);
+
+/* =========================
+   404 HANDLER
+========================= */
+
+app.use((req, res) => {
+  return res.status(404).json({
+    ok: false,
+    error: `Route not found: ${req.method} ${req.originalUrl}`
+  });
+});
+
+/* =========================
+   ERROR HANDLER
+========================= */
+
+app.use((error, req, res, next) => {
+  console.error("Express error:", error);
+
+  return res.status(500).json({
+    ok: false,
+    error: error.message || "Internal server error"
+  });
+});
+
+/* =========================
+   EXPORT FOR VERCEL
+========================= */
 
 module.exports = app;
