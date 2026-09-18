@@ -1,9 +1,8 @@
-// Food recommendations page scripts
 // ================= NUTRIMOOD AI - RECOMMENDATIONS JS =================
 
 const recommendationData = {
   Happy: {
-    icon: "★",
+    icon: "😊",
     foods: [
       ["•", "Avocado", "Healthy fats for energy and brain focus."],
       ["•", "Dark Chocolate", "Supports feel-good mood."],
@@ -18,8 +17,9 @@ const recommendationData = {
     ],
     tip: "Happy mood-la light healthy snacks continue pannunga."
   },
+
   Sad: {
-    icon: "★",
+    icon: "😔",
     foods: [
       ["•", "Banana", "Natural mood-friendly fruit."],
       ["•", "Milk", "Comfort drink with nutrients."],
@@ -34,8 +34,9 @@ const recommendationData = {
     ],
     tip: "Sad mood long time irundha trusted person kitta pesunga."
   },
+
   Stress: {
-    icon: "★",
+    icon: "😣",
     foods: [
       ["•", "Green Tea", "Calming and refreshing."],
       ["•", "Almonds", "Magnesium and healthy fats."],
@@ -50,8 +51,9 @@ const recommendationData = {
     ],
     tip: "Stress irundha water kudichu 10 minutes walk pannunga."
   },
+
   Tired: {
-    icon: "★",
+    icon: "😴",
     foods: [
       ["•", "Banana", "Quick energy boost."],
       ["•", "Dates", "Natural sugar and energy."],
@@ -66,8 +68,9 @@ const recommendationData = {
     ],
     tip: "Tired ah irundha sleep schedule and hydration check pannunga."
   },
+
   Angry: {
-    icon: "★",
+    icon: "😡",
     foods: [
       ["•", "Cucumber", "Cooling and hydrating."],
       ["•", "Herbal Tea", "Calm support."],
@@ -82,8 +85,9 @@ const recommendationData = {
     ],
     tip: "Angry mood-la deep breathing and light food better."
   },
+
   Neutral: {
-    icon: "★",
+    icon: "🙂",
     foods: [
       ["•", "Apple", "Light healthy snack."],
       ["•", "Salad", "Balanced nutrition."],
@@ -98,8 +102,9 @@ const recommendationData = {
     ],
     tip: "Neutral mood-la balanced meal continue pannunga."
   },
+
   Anxious: {
-    icon: "★",
+    icon: "😟",
     foods: [
       ["•", "Chamomile Tea", "Calming and relaxing."],
       ["•", "Almonds", "Healthy fats for brain support."],
@@ -114,8 +119,9 @@ const recommendationData = {
     ],
     tip: "Anxious mood-la light food and slow breathing try pannunga."
   },
+
   "Low Focus": {
-    icon: "★",
+    icon: "🧠",
     foods: [
       ["•", "Walnuts", "Brain-friendly healthy fats."],
       ["•", "Green Tea", "Calm, light focus support."],
@@ -132,130 +138,394 @@ const recommendationData = {
   }
 };
 
-const fallbackRecommendation = {
-  icon: "★",
-  foods: [
-    ["•", "Fresh Fruit", "Use a simple snack to support your mood."],
-    ["•", "Whole Grains", "Provides steady energy throughout the day."],
-    ["•", "Nuts", "Good fats for brain and mood support."],
-    ["•", "Water", "Hydration is always helpful for mood and focus."]
-  ],
-  benefits: [
-    "Simple nutrition helps stabilize mood",
-    "Hydration supports energy and clarity",
-    "Light food keeps digestion easy",
-    "Balanced choices support wellbeing"
-  ],
-  tip: "Try a light, balanced meal and stay hydrated."
-};
+const fallbackRecommendation = recommendationData.Neutral;
+
+
+/* =========================
+   NORMALIZE MOOD
+========================= */
 
 function normalizeMood(value) {
-  if (!value || typeof value !== "string") return "Neutral";
-  value = value.toLowerCase();
-  if (value.includes("happy")) return "Happy";
-  if (value.includes("sad")) return "Sad";
-  if (value.includes("stress")) return "Stress";
-  if (value.includes("tired")) return "Tired";
-  if (value.includes("angry")) return "Angry";
-  if (value.includes("anxious")) return "Anxious";
-  if (value.includes("focus")) return "Low Focus";
-  if (value.includes("neutral")) return "Neutral";
+
+  if (!value) return "Neutral";
+
+  if (typeof value === "object") {
+    value =
+      value.mood ||
+      value.detectedMood ||
+      value.detected_mood ||
+      value.emotion ||
+      value.label ||
+      "Neutral";
+  }
+
+  const mood = String(value)
+    .trim()
+    .toLowerCase();
+
+  if (mood.includes("happy")) return "Happy";
+  if (mood.includes("sad")) return "Sad";
+  if (mood.includes("stress")) return "Stress";
+  if (mood.includes("tired")) return "Tired";
+  if (mood.includes("angry")) return "Angry";
+  if (mood.includes("anxious")) return "Anxious";
+
+  if (
+    mood.includes("low focus") ||
+    mood.includes("low_focus") ||
+    mood.includes("focus")
+  ) {
+    return "Low Focus";
+  }
+
+  if (mood.includes("neutral")) return "Neutral";
+
   return "Neutral";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const latestMood = JSON.parse(localStorage.getItem("nutrimoodLatestMood")) || {
-    mood: "Neutral",
-    icon: "★"
-  };
 
-  const moodCards = document.querySelectorAll(".mood-card");
-  const recommendMood = document.getElementById("recommendMood");
-  const foodList = document.getElementById("foodList");
-  const benefitList = document.getElementById("benefitList");
-  const dailyTip = document.getElementById("dailyTip");
-  const savePlanBtn = document.getElementById("savePlanBtn");
+/* =========================
+   GET LATEST MOOD
+========================= */
 
-  let currentMood = latestMood.mood || "Neutral";
+function getLatestMood() {
 
-  function renderRecommendation(mood) {
-    const moodKey = normalizeMood(mood);
-    const data = recommendationData[moodKey] || fallbackRecommendation;
-    const foods = Array.isArray(data.foods) && data.foods.length ? data.foods : fallbackRecommendation.foods;
-    const benefits = Array.isArray(data.benefits) && data.benefits.length ? data.benefits : fallbackRecommendation.benefits;
-    const tip = data.tip || fallbackRecommendation.tip;
+  try {
 
-    if (recommendMood) recommendMood.textContent = moodKey;
-
-    if (foodList) {
-      foodList.innerHTML = foods
-        .map(
-          (food) => `
-          <div class="food-card">
-            <div class="food-emoji">${food[0]}</div>
-            <h3>${food[1]}</h3>
-            <p>${food[2]}</p>
-          </div>
-        `
-        )
-        .join("");
-    }
-
-    if (benefitList) {
-      benefitList.innerHTML = benefits
-        .map((benefit) => `<li><span>•</span>${benefit}</li>`)
-        .join("");
-    }
-
-    if (dailyTip) dailyTip.textContent = tip;
-  }
-
-  moodCards.forEach((card) => {
-    if (card.dataset.mood === currentMood) {
-      card.classList.add("active");
-    } else {
-      card.classList.remove("active");
-    }
-
-    card.addEventListener("click", () => {
-      moodCards.forEach((c) => c.classList.remove("active"));
-      card.classList.add("active");
-
-      currentMood = card.dataset.mood;
-      renderRecommendation(currentMood);
-    });
-  });
-
-  if (savePlanBtn) {
-    savePlanBtn.addEventListener("click", () => {
-      const moodKey = normalizeMood(currentMood);
-      const data = recommendationData[moodKey] || fallbackRecommendation;
-      const foods = Array.isArray(data.foods) && data.foods.length ? data.foods : fallbackRecommendation.foods;
-
-      localStorage.setItem(
-        "nutrimoodLatestRecommendation",
-        JSON.stringify({
-          mood: moodKey,
-          foods,
-          date: new Date().toLocaleString()
-        })
+    const saved =
+      localStorage.getItem(
+        "nutrimoodLatestMood"
       );
 
-      const history = JSON.parse(localStorage.getItem("nutrimoodHistory")) || [];
-      history.unshift({
-        type: "food",
-        title: `Food Plan Saved: ${moodKey}`,
-        date: new Date().toLocaleString(),
-        details: foods.map((f) => f[1]).join(", ")
-      });
-      localStorage.setItem("nutrimoodHistory", JSON.stringify(history));
+    if (!saved) {
+      return "Neutral";
+    }
 
-      savePlanBtn.innerHTML = "Saved Successfully";
-      setTimeout(() => {
-        savePlanBtn.innerHTML = "Save Plan";
-      }, 1600);
-    });
+    const parsed =
+      JSON.parse(saved);
+
+    console.log(
+      "NutriMood latest mood:",
+      parsed
+    );
+
+    return normalizeMood(parsed);
+
+  } catch (error) {
+
+    console.error(
+      "Mood reading error:",
+      error
+    );
+
+    return "Neutral";
   }
+}
 
-  renderRecommendation(currentMood);
-});
+
+/* =========================
+   PAGE LOAD
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const moodCards =
+      document.querySelectorAll(
+        ".mood-card"
+      );
+
+    const recommendMood =
+      document.getElementById(
+        "recommendMood"
+      );
+
+    const foodList =
+      document.getElementById(
+        "foodList"
+      );
+
+    const benefitList =
+      document.getElementById(
+        "benefitList"
+      );
+
+    const dailyTip =
+      document.getElementById(
+        "dailyTip"
+      );
+
+    const savePlanBtn =
+      document.getElementById(
+        "savePlanBtn"
+      );
+
+
+    /* =========================
+       CURRENT MOOD
+    ========================= */
+
+    let currentMood =
+      getLatestMood();
+
+
+    /* =========================
+       RENDER RECOMMENDATION
+    ========================= */
+
+    function renderRecommendation(
+      mood
+    ) {
+
+      const moodKey =
+        normalizeMood(mood);
+
+      const data =
+        recommendationData[moodKey] ||
+        fallbackRecommendation;
+
+      console.log(
+        "Rendering food recommendation for:",
+        moodKey
+      );
+
+
+      /* MOOD TITLE */
+
+      if (recommendMood) {
+
+        recommendMood.textContent =
+          moodKey;
+      }
+
+
+      /* FOOD LIST */
+
+      if (foodList) {
+
+        foodList.innerHTML =
+          data.foods
+            .map(
+              (food) => `
+                <div class="food-card">
+
+                  <div class="food-emoji">
+                    ${food[0]}
+                  </div>
+
+                  <h3>
+                    ${food[1]}
+                  </h3>
+
+                  <p>
+                    ${food[2]}
+                  </p>
+
+                </div>
+              `
+            )
+            .join("");
+      }
+
+
+      /* BENEFITS */
+
+      if (benefitList) {
+
+        benefitList.innerHTML =
+          data.benefits
+            .map(
+              (benefit) =>
+                `<li>
+                  <span>•</span>
+                  ${benefit}
+                </li>`
+            )
+            .join("");
+      }
+
+
+      /* DAILY TIP */
+
+      if (dailyTip) {
+
+        dailyTip.textContent =
+          data.tip;
+      }
+
+
+      /* ACTIVE MOOD CARD */
+
+      moodCards.forEach(
+        (card) => {
+
+          const cardMood =
+            normalizeMood(
+              card.dataset.mood
+            );
+
+          card.classList.toggle(
+            "active",
+            cardMood === moodKey
+          );
+        }
+      );
+
+
+      currentMood = moodKey;
+    }
+
+
+    /* =========================
+       MOOD CARD CLICK
+    ========================= */
+
+    moodCards.forEach(
+      (card) => {
+
+        card.addEventListener(
+          "click",
+          () => {
+
+            const selectedMood =
+              normalizeMood(
+                card.dataset.mood
+              );
+
+            currentMood =
+              selectedMood;
+
+            renderRecommendation(
+              selectedMood
+            );
+
+            /*
+              Save selected mood so
+              refresh also keeps it.
+            */
+
+            localStorage.setItem(
+              "nutrimoodLatestMood",
+              JSON.stringify({
+                mood: selectedMood,
+                icon:
+                  recommendationData[
+                    selectedMood
+                  ]?.icon || "★",
+                source:
+                  "recommendation",
+                updatedAt:
+                  new Date().toISOString()
+              })
+            );
+          }
+        );
+      }
+    );
+
+
+    /* =========================
+       SAVE PLAN
+    ========================= */
+
+    if (savePlanBtn) {
+
+      savePlanBtn.addEventListener(
+        "click",
+        () => {
+
+          const moodKey =
+            normalizeMood(
+              currentMood
+            );
+
+          const data =
+            recommendationData[
+              moodKey
+            ] ||
+            fallbackRecommendation;
+
+          const foods =
+            data.foods;
+
+
+          localStorage.setItem(
+            "nutrimoodLatestRecommendation",
+            JSON.stringify({
+              mood: moodKey,
+              foods: foods,
+              benefits:
+                data.benefits,
+              tip:
+                data.tip,
+              date:
+                new Date().toLocaleString()
+            })
+          );
+
+
+          const history =
+            JSON.parse(
+              localStorage.getItem(
+                "nutrimoodHistory"
+              )
+            ) || [];
+
+
+          history.unshift({
+
+            type: "food",
+
+            title:
+              `Food Plan Saved: ${moodKey}`,
+
+            date:
+              new Date().toLocaleString(),
+
+            details:
+              foods
+                .map(
+                  (food) =>
+                    food[1]
+                )
+                .join(", ")
+          });
+
+
+          localStorage.setItem(
+            "nutrimoodHistory",
+            JSON.stringify(
+              history
+            )
+          );
+
+
+          savePlanBtn.textContent =
+            "Saved Successfully";
+
+
+          setTimeout(
+            () => {
+
+              savePlanBtn.textContent =
+                "Save Plan";
+
+            },
+            1600
+          );
+        }
+      );
+    }
+
+
+    /* =========================
+       INITIAL RENDER
+    ========================= */
+
+    renderRecommendation(
+      currentMood
+    );
+
+  }
+);
